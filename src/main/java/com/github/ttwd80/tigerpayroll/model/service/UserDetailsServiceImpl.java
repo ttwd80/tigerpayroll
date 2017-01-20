@@ -1,8 +1,8 @@
 package com.github.ttwd80.tigerpayroll.model.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,20 +12,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.github.ttwd80.tigerpayroll.model.entity.Role;
-import com.github.ttwd80.tigerpayroll.model.repository.RoleRepository;
+import com.github.ttwd80.tigerpayroll.model.entity.UserRole;
 import com.github.ttwd80.tigerpayroll.model.repository.UserRepository;
+import com.github.ttwd80.tigerpayroll.model.repository.UserRoleRepository;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
+	private final UserRoleRepository userRoleRepository;
 
 	@Autowired
-	public UserDetailsServiceImpl(final UserRepository userRepository, RoleRepository roleRepository) {
+	public UserDetailsServiceImpl(final UserRepository userRepository, UserRoleRepository userRoleRepository) {
 		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
+		this.userRoleRepository = userRoleRepository;
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		} else {
 			final String password = user.getPassword();
-			List<Role> roles = roleRepository.findByUserRolesUserByUsernameUsername(username);
-			final List<? extends GrantedAuthority> authorities = toList(roles);
+			List<UserRole> userroles = userRoleRepository.findByUserByUsernameUsername(username);
+			final List<? extends GrantedAuthority> authorities = toList(userroles);
 			final String id = user.getUsername();
 			final org.springframework.security.core.userdetails.User result = new org.springframework.security.core.userdetails.User(
 					id, password, true, true, true, !user.isLocked(), authorities);
@@ -44,14 +44,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 	}
 
-	private List<? extends GrantedAuthority> toList(final List<Role> roles) {
-		if (roles == null) {
+	private List<? extends GrantedAuthority> toList(final List<UserRole> userroles) {
+		if (userroles == null) {
 			return Collections.emptyList();
 		}
-		final List<GrantedAuthority> list = new ArrayList<>();
-		for (final Role value : roles) {
-			list.add(new SimpleGrantedAuthority(value.getId()));
-		}
-		return list;
+		return userroles.stream().map(ur -> new SimpleGrantedAuthority(ur.getRole().getId()))
+				.collect(Collectors.toList());
 	}
 }
