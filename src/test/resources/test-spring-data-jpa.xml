@@ -8,7 +8,17 @@
 
 	<jpa:repositories entity-manager-factory-ref="entityManagerFactory"
 		transaction-manager-ref="jpaTransactionManager"
-		base-package="com.github.ttwd80.tigerpayroll.model.repository" />
+		base-package="com.github.ttwd80.tigerpayroll.model.repository">
+	</jpa:repositories>
+
+	<bean id="dateTimeProvider"
+		class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="targetClass"
+			value="org.springframework.data.auditing.CurrentDateTimeProvider" />
+		<property name="targetField" value="INSTANCE" />
+	</bean>
+
+	<jpa:auditing set-dates="true" date-time-provider-ref="dateTimeProvider" />
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -19,6 +29,11 @@
 				<property name="database" value="POSTGRESQL" />
 				<property name="showSql" value="true" />
 			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="jadira.usertype.autoRegisterUserTypes">true</prop>
+			</props>
 		</property>
 	</bean>
 

@@ -5,6 +5,7 @@
 <hibernate-reverse-engineering>
 	<type-mapping>
 		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" />
+		<sql-type jdbc-type="TIMESTAMP" hibernate-type="org.joda.time.DateTime" />
 	</type-mapping>
 
 

@@ -14,6 +14,7 @@ public class RoleRepositoryIT extends BaseRepositoryIT {
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Override
 	@Before
 	public void setUp() {
 		super.setUp();
