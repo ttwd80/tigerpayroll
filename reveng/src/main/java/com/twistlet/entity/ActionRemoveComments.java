@@ -12,7 +12,7 @@ public class ActionRemoveComments {
 		String directory = args[0];
 		Collection<File> files = FileUtils.listFiles(new File(directory), null, false);
 		for (File file : files) {
-			List<String> lines = FileUtils.readLines(file);
+			List<String> lines = FileUtils.readLines(file, "UTF-8");
 			if (lines.size() > 2 && lines.get(1).startsWith("// Generated")) {
 				lines.remove(1);
 			}

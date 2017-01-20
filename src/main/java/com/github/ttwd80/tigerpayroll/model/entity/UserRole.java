@@ -76,6 +76,7 @@ public class UserRole  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="last_modified_by")
+    @org.springframework.data.annotation.LastModifiedBy
     public User getUserByLastModifiedBy() {
         return this.userByLastModifiedBy;
     }
@@ -106,6 +107,7 @@ public class UserRole  implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date", length=35)
+    @org.springframework.data.annotation.CreatedDate
     public Date getCreatedDate() {
         return this.createdDate;
     }
@@ -116,6 +118,7 @@ public class UserRole  implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="last_modified_date", length=35)
+    @org.springframework.data.annotation.LastModifiedDate
     public Date getLastModifiedDate() {
         return this.lastModifiedDate;
     }
