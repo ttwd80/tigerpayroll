@@ -9,52 +9,54 @@ import javax.annotation.Generated;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.path.PathInits;
 
-
 /**
  * QRole is a Querydsl query type for Role
  */
 @Generated("com.mysema.query.codegen.EntitySerializer")
 public class QRole extends EntityPathBase<Role> {
 
-    private static final long serialVersionUID = 448238495L;
+	private static final long serialVersionUID = 448238495L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
+	private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRole role = new QRole("role");
+	public static final QRole role = new QRole("role");
 
-    public final DateTimePath<java.util.Date> createdDate = createDateTime("createdDate", java.util.Date.class);
+	public final DateTimePath<java.util.Date> createdDate = createDateTime("createdDate", java.util.Date.class);
 
-    public final StringPath id = createString("id");
+	public final StringPath id = createString("id");
 
-    public final DateTimePath<java.util.Date> lastModifiedDate = createDateTime("lastModifiedDate", java.util.Date.class);
+	public final DateTimePath<java.util.Date> lastModifiedDate = createDateTime("lastModifiedDate",
+			java.util.Date.class);
 
-    public final QUser userByCreatedBy;
+	public final QUser userByCreatedBy;
 
-    public final QUser userByLastModifiedBy;
+	public final QUser userByLastModifiedBy;
 
-    public final SetPath<UserRole, QUserRole> userRoles = this.<UserRole, QUserRole>createSet("userRoles", UserRole.class, QUserRole.class, PathInits.DIRECT2);
+	public final SetPath<UserRole, QUserRole> userRoles = this.<UserRole, QUserRole>createSet("userRoles",
+			UserRole.class, QUserRole.class, PathInits.DIRECT2);
 
-    public QRole(String variable) {
-        this(Role.class, forVariable(variable), INITS);
-    }
+	public QRole(String variable) {
+		this(Role.class, forVariable(variable), INITS);
+	}
 
-    public QRole(Path<? extends Role> path) {
-        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
-    }
+	public QRole(Path<? extends Role> path) {
+		this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+	}
 
-    public QRole(PathMetadata<?> metadata) {
-        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
-    }
+	public QRole(PathMetadata<?> metadata) {
+		this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
+	}
 
-    public QRole(PathMetadata<?> metadata, PathInits inits) {
-        this(Role.class, metadata, inits);
-    }
+	public QRole(PathMetadata<?> metadata, PathInits inits) {
+		this(Role.class, metadata, inits);
+	}
 
-    public QRole(Class<? extends Role> type, PathMetadata<?> metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
-        this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
-    }
+	public QRole(Class<? extends Role> type, PathMetadata<?> metadata, PathInits inits) {
+		super(type, metadata, inits);
+		this.userByCreatedBy = inits.isInitialized("userByCreatedBy")
+				? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
+		this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy")
+				? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
+	}
 
 }
-
