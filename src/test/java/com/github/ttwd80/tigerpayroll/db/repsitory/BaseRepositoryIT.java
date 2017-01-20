@@ -1,8 +1,11 @@
 package com.github.ttwd80.tigerpayroll.db.repsitory;
 
+import static org.junit.Assert.*;
+
 import javax.sql.DataSource;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +37,8 @@ public class BaseRepositoryIT extends AbstractJUnit4SpringContextTests {
 		resourceDatabasePopulator.execute(dataSource);
 	}
 
+	@Test
+	public void testTrue() {
+		assertTrue(true);
+	}
 }
