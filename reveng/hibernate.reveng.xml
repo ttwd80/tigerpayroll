@@ -16,4 +16,13 @@
 			</generator>
 		</primary-key>
 	</table>
+	<table name="image" schema="public">
+		<primary-key>
+			<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+				<param name="optimizer">none</param>
+				<param name="increment_size">1</param>
+				<param name="sequence_name">image_id_seq</param>
+			</generator>
+		</primary-key>
+	</table>
 </hibernate-reverse-engineering>
