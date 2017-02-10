@@ -6,6 +6,7 @@ chmod 0600 ~/.pgpass
 create extension pgcrypto;
 
 select length(crypt('admin123', gen_salt('bf', 10)));
+
 select crypt('tigerhrdev2017', gen_salt('bf', 10));
 
 pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev > tigerhrdev.sql 
@@ -19,7 +20,12 @@ psql -h 127.0.0.1 -U tigerhrdev tigerhrdev < tigerhrdev.sql
 init
 insert into 
 
-insert into "user" values ('admin',crypt('tigerhrdev2017', gen_salt('bf', 10)), false, null, 'admin', null, now(), null);
+ssh -L 8081:localhost:8081 -L 5432:localhost:5432 ubuntu@192.168.100.101
+
+
+select crypt('tigerhrdev2017', gen_salt('bf', 10));
+
+insert into "user" values ('admin','$2a$10$cWLKnN/9vOR1ShGzFcr.TeMfyVDHlVLeU3xysYa6Gpdt9XLkC/wqq', false, null, 'admin', null, now(), null);
 insert into "role" values ('ROLE_ADMIN', 'admin', null, now(), null);
 insert into "user_role" values (DEFAULT, 'admin', 'ROLE_ADMIN', 'admin', null, now(), null);
 
