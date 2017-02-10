@@ -7,11 +7,11 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="username"
-			value="#{systemProperties['PGUSER'] ?: 'tigerhrdev'}" />
+			value="#{systemProperties['PG_USER'] ?: 'tigerhrdev'}" />
 		<property name="password"
-			value="#{systemProperties['PGPASSWORD'] ?: 'tigerhrdev'}" />
+			value="#{systemProperties['PG_PASSWORD'] ?: 'tigerhrdev'}" />
 		<property name="url"
-			value="#{systemProperties['PGPASSWORD'] != null ? 'jdbc:postgresql://127.0.0.1:5436/tigerhrdb' :'jdbc:postgresql://127.0.0.1/tigerhrdb'}" />
+			value="#{systemProperties['PG_PASSWORD'] != null ? 'jdbc:postgresql://127.0.0.1:5436/tigerhrdb' :'jdbc:postgresql://127.0.0.1/tigerhrdb'}" />
 		<property name="driverClassName" value="org.postgresql.Driver" />
 	</bean>
 </beans>
