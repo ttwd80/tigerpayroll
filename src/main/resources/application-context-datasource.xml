@@ -5,11 +5,11 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="username"
-			value="#{systemProperties['PG_USER'] ?: 'tigerhrdev'}" />
+			value="#{systemEnvironment['PG_USER'] ?: 'tigerhrdev'}" />
 		<property name="password"
-			value="#{systemProperties['PG_PASSWORD'] ?: 'tigerhrdev'}" />
+			value="#{systemEnvironment['PG_PASSWORD'] ?: 'tigerhrdev'}" />
 		<property name="url"
-			value="#{systemProperties['PG_PASSWORD'] != null ? 'jdbc:postgresql://127.0.0.1:5436/tigerhrdev' :'jdbc:postgresql://127.0.0.1/tigerhrdev'}" />
+			value="#{systemEnvironment['CODESHIP'] != null ? 'jdbc:postgresql://127.0.0.1:5436/tigerhrdev' :'jdbc:postgresql://127.0.0.1/tigerhrdev'}" />
 		<property name="driverClassName" value="org.postgresql.Driver" />
 	</bean>
 </beans>
