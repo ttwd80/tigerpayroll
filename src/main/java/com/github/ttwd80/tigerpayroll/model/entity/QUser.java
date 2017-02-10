@@ -22,7 +22,7 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final DateTimePath<org.joda.time.DateTime> createdDate = createDateTime("createdDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
     public final QImage image;
 
@@ -30,7 +30,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final SetPath<Image, QImage> imagesForLastModifiedBy = this.<Image, QImage>createSet("imagesForLastModifiedBy", Image.class, QImage.class, PathInits.DIRECT2);
 
-    public final DateTimePath<org.joda.time.DateTime> lastModifiedDate = createDateTime("lastModifiedDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
     public final BooleanPath locked = createBoolean("locked");
 

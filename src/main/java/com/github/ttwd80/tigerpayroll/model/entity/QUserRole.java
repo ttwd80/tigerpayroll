@@ -24,11 +24,11 @@ public class QUserRole extends EntityPathBase<UserRole> {
 
     public final StringPath createdBy = createString("createdBy");
 
-    public final DateTimePath<org.joda.time.DateTime> createdDate = createDateTime("createdDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
-    public final DateTimePath<org.joda.time.DateTime> lastModifiedDate = createDateTime("lastModifiedDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
     public final QRole role;
 

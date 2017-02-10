@@ -22,13 +22,13 @@ public class QImage extends EntityPathBase<Image> {
 
     public static final QImage image1 = new QImage("image1");
 
-    public final DateTimePath<org.joda.time.DateTime> createdDate = createDateTime("createdDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final ArrayPath<byte[], Byte> image = createArray("image", byte[].class);
 
-    public final DateTimePath<org.joda.time.DateTime> lastModifiedDate = createDateTime("lastModifiedDate", org.joda.time.DateTime.class);
+    public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
     public final QUser userByCreatedBy;
 
