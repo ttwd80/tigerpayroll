@@ -11,6 +11,10 @@ select crypt('tigerhrdev2017', gen_salt('bf', 10));
 select crypt('admin', gen_salt('bf', 10));
 $2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq
 
+select crypt('user', gen_salt('bf', 10));
+$2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta
+
+
 pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev > tigerhrdev.sql 
 
 pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -v "^$"  | grep -v --  "^--" >  tigerhrdev.sql
@@ -30,5 +34,8 @@ select crypt('tigerhrdev2017', gen_salt('bf', 10));
 insert into "user" values ('admin','$2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq', false, null, 'admin', null, now(), null);
 insert into "role" values ('ROLE_ADMIN', 'admin', null, now(), null);
 insert into "user_role" values (DEFAULT, 'admin', 'ROLE_ADMIN', 'admin', null, now(), null);
+insert into "user" values ('user','$2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta', false, null, 'admin', null, now(), null);
+insert into "role" values ('ROLE_USER', 'admin', null, now(), null);
+insert into "user_role" values (DEFAULT, 'user', 'ROLE_USER', 'admin', null, now(), null);
 
 SELECT table_name  FROM information_schema.tables where table_schema = 'public';
