@@ -47,11 +47,14 @@
 	<mvc:default-servlet-handler />
 
 	<mvc:view-controller path="/" view-name="redirect:/index" />
-	<mvc:view-controller path="/index" view-name="index" />
-
+	<mvc:view-controller path="/index" view-name="redirect:/login" />
 	<mvc:view-controller path="/login" view-name="login" />
-
 
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 	<mvc:resources location="/webjars/" mapping="/webjars/**" />
+
+	<util:map id="roleMap">
+		<entry key="ROLE_ADMIN" value="/admin/index" />
+		<entry key="ROLE_USER" value="/user/index" />
+	</util:map>
 </beans>
