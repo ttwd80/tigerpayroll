@@ -30,7 +30,7 @@
 			access="ROLE_USER, ROLE_ADMIN" />
 		<security:form-login login-page="/login"
 			login-processing-url="/security_check" authentication-failure-url="/login?fail=true"
-			default-target-url="/index" username-parameter="username"
+			default-target-url="/main" username-parameter="username"
 			password-parameter="password" always-use-default-target="true" />
 		<security:logout logout-url="/logout"
 			logout-success-url="/login" invalidate-session="true" />
