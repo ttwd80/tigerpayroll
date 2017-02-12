@@ -1,6 +1,7 @@
 package pojo;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -14,6 +15,8 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
+import org.springframework.beans.PropertyAccessor;
+import org.springframework.beans.PropertyAccessorFactory;
 
 import com.google.common.base.Predicate;
 import com.mysema.query.types.path.EntityPathBase;
@@ -31,17 +34,27 @@ public class PojoTest {
 	}
 
 	private void processEntity(final Class<?> c) throws Exception {
-		System.out.println(c.getName());
-		processConstructors(c);
+		final Object object = processConstructors(c);
+		final PropertyAccessor propertyAccessor = PropertyAccessorFactory.forDirectFieldAccess(object);
+		final Field[] fields = c.getFields();
+		for (final Field f : fields) {
+			final String name = f.getName();
+			final Class<?> fieldType = f.getType();
+			final Object value = createValue(fieldType);
+			propertyAccessor.setPropertyValue(name, value);
+			propertyAccessor.getPropertyValue(name);
+		}
 	}
 
-	private void processConstructors(final Class<?> c) throws Exception {
+	private Object processConstructors(final Class<?> c) throws Exception {
+		Object object = null;
 		final Constructor<?>[] ctors = c.getConstructors();
 		for (final Constructor<?> ctor : ctors) {
 			final Class<?>[] paramTypes = ctor.getParameterTypes();
 			final Object[] params = createParams(paramTypes);
-			ctor.newInstance(params);
+			object = ctor.newInstance(params);
 		}
+		return object;
 	}
 
 	private Object[] createParams(final Class<?>[] paramTypes) {
