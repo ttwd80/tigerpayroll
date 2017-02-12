@@ -33,6 +33,15 @@ public class PojoTest {
 		}
 	}
 
+	@Test
+	public void testQueryDsl() throws Exception {
+		final Set<Class<?>> classes = listClasses(packageName, EntityPathBase.class);
+		for (final Class<?> c : classes) {
+			final String name = c.getName();
+			Class.forName(name);
+		}
+	}
+
 	private void processEntity(final Class<?> c) throws Exception {
 		final Object object = processConstructors(c);
 		final PropertyAccessor propertyAccessor = PropertyAccessorFactory.forDirectFieldAccess(object);
@@ -72,6 +81,7 @@ public class PojoTest {
 		} else {
 			return null;
 		}
+
 	}
 
 	private Object createPrimitive(final Class<?> c) {
@@ -91,14 +101,6 @@ public class PojoTest {
 			return " ".getBytes()[0];
 		} else {
 			throw new RuntimeException("unknown class = " + c.getName());
-		}
-	}
-
-	@Test
-	public void testQueryDsl() {
-		final Set<Class<?>> classes = listClasses(packageName, EntityPathBase.class);
-		for (final Class<?> c : classes) {
-			System.out.println(c.getName());
 		}
 	}
 
