@@ -14,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
-	@Value("#{roleLocationMap}")
-	Map<String, String> roleLocationMap;
+	final Map<String, String> roleLocationMap;
+
+	public MainController(@Value("#{roleLocationMap}") final Map<String, String> roleLocationMap) {
+		super();
+		this.roleLocationMap = roleLocationMap;
+	}
 
 	@RequestMapping(value = "/main")
 	public ModelAndView get(final HttpServletRequest request, final HttpServletResponse response) {

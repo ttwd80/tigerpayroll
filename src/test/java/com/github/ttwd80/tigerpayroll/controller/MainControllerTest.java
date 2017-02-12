@@ -31,11 +31,10 @@ public class MainControllerTest {
 
 	@Test
 	public void testGetAdmin() {
-		final MainController sut = new MainController();
 		final Map<String, String> map = new LinkedHashMap<>();
 		map.put("ROLE_ADMIN", "redirect:/aaa");
 		map.put("ROLE_USER", "redirect:/bbb");
-		sut.roleLocationMap = map;
+		final MainController sut = new MainController(map);
 		when(request.isUserInRole("ROLE_ADMIN")).thenReturn(Boolean.TRUE);
 		final ModelAndView mav = sut.get(request, null);
 		assertEquals("redirect:/aaa", mav.getViewName());
@@ -43,11 +42,10 @@ public class MainControllerTest {
 
 	@Test
 	public void testGetUser() {
-		final MainController sut = new MainController();
 		final Map<String, String> map = new LinkedHashMap<>();
 		map.put("ROLE_ADMIN", "redirect:/aaa");
 		map.put("ROLE_USER", "redirect:/bbb");
-		sut.roleLocationMap = map;
+		final MainController sut = new MainController(map);
 		when(request.isUserInRole("ROLE_USER")).thenReturn(Boolean.TRUE);
 		final ModelAndView mav = sut.get(request, null);
 		assertEquals("redirect:/bbb", mav.getViewName());
@@ -55,11 +53,10 @@ public class MainControllerTest {
 
 	@Test
 	public void testGetNone() {
-		final MainController sut = new MainController();
 		final Map<String, String> map = new LinkedHashMap<>();
 		map.put("ROLE_ADMIN", "redirect:/aaa");
 		map.put("ROLE_USER", "redirect:/bbb");
-		sut.roleLocationMap = map;
+		final MainController sut = new MainController(map);
 		final ModelAndView mav = sut.get(request, response);
 		assertNull(mav);
 		Mockito.verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
