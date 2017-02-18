@@ -30,7 +30,7 @@ public class MainControllerSteps {
 
 	MainController sut;
 
-	String viewName;
+	ModelAndView mav;
 
 	@Given("login configuration: $table")
 	public void setUp(final ExamplesTable table) {
@@ -45,14 +45,18 @@ public class MainControllerSteps {
 	public void userIsInRole(final String userRole) {
 		MockitoAnnotations.initMocks(this);
 		when(request.isUserInRole(userRole)).thenReturn(Boolean.TRUE);
-		final ModelAndView mav = sut.get(request, response);
-		viewName = mav.getViewName();
+		mav = sut.get(request, response);
 	}
 
 	@Then("the user should see view $view")
 	public void theUserShouldSee(final String view) {
-		assertThat(viewName, equalTo(view));
+		assertThat(mav.getViewName(), equalTo(view));
+	}
 
+	@Then("the user should see a permission error")
+	public void theUserShouldSeePermissionError() {
+		assertThat(mav, nullValue());
+		verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
 }

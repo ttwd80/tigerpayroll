@@ -8,3 +8,9 @@ Then the user should see view redirect:/admin/index
 
 When user is in role ROLE_USER
 Then the user should see view redirect:/user/index
+
+When user is in role ROLE_USER
+Then the user should see view redirect:/user/index
+
+When user is in role ROLE_UNDEFINED
+Then the user should see a permission error
