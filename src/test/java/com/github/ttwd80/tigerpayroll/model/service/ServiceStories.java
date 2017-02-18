@@ -1,10 +1,14 @@
 package com.github.ttwd80.tigerpayroll.model.service;
 
+import static org.jbehave.core.reporters.Format.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
@@ -17,11 +21,20 @@ public class ServiceStories extends JUnitStories {
 	}
 
 	@Override
-	public InjectableStepsFactory stepsFactory() {
-		final List<Object> stepInstances = new ArrayList<>();
-		stepInstances.add(new UserDetailsServiceImplSteps());
+	public Configuration configuration() {
+		final StoryReporterBuilder storyReporterBuilder = new StoryReporterBuilder();
+		storyReporterBuilder.withDefaultFormats();
+		storyReporterBuilder.withFormats(CONSOLE, HTML);
 		final MostUsefulConfiguration configuration = new MostUsefulConfiguration();
-		return new InstanceStepsFactory(configuration, stepInstances);
+		configuration.useStoryReporterBuilder(storyReporterBuilder);
+		return configuration;
+	}
+
+	@Override
+	public InjectableStepsFactory stepsFactory() {
+		final List<Object> list = new ArrayList<>();
+		list.add(new UserDetailsServiceImplSteps());
+		return new InstanceStepsFactory(configuration(), list);
 	}
 
 }

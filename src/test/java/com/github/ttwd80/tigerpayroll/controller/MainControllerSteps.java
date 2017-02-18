@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.core.model.ExamplesTable;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,11 +32,12 @@ public class MainControllerSteps {
 
 	String viewName;
 
-	@Given("a login configuration $adminRole => $adminView, $userRole => $userView")
-	public void setUp(final String adminRole, final String adminView, final String userRole, final String userView) {
+	@Given("login configuration: $table")
+	public void setUp(final ExamplesTable table) {
 		roleLocationMap = new LinkedHashMap<>();
-		roleLocationMap.put(adminRole, adminView);
-		roleLocationMap.put(userRole, userView);
+		for (final Map<String, String> row : table.getRows()) {
+			roleLocationMap.put(row.get("role"), row.get("view"));
+		}
 		sut = new MainController(roleLocationMap);
 	}
 
