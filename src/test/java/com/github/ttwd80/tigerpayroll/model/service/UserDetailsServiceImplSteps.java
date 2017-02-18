@@ -1,11 +1,13 @@
 package com.github.ttwd80.tigerpayroll.model.service;
 
-import static org.hamcrest.core.IsInstanceOf.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import org.jbehave.core.model.ExamplesTable;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.github.ttwd80.tigerpayroll.model.entity.Role;
@@ -39,6 +43,8 @@ public class UserDetailsServiceImplSteps {
 
 	Exception thrownException;
 
+	UserDetails userDetails;
+
 	@Given("user configuration: $table")
 	public void userConfiguration(final ExamplesTable table) {
 		for (final Map<String, String> row : table.getRows()) {
@@ -49,7 +55,7 @@ public class UserDetailsServiceImplSteps {
 
 	private List<UserRole> toListUserRole(final String csv) {
 		final List<String> items = Arrays.asList(csv.split(", "));
-		final List<UserRole> list = items.stream().map(value -> {
+		final List<UserRole> list = items.stream().filter(x -> x.length() > 0).map(value -> {
 			final UserRole userRole = new UserRole();
 			final Role role = new Role();
 			role.setId(value);
@@ -67,9 +73,11 @@ public class UserDetailsServiceImplSteps {
 		final ArgumentMatcher<String> inMap = x -> map.containsKey(x);
 		when(userRepository.findOne(argThat(notInMap))).thenReturn(null);
 		when(userRepository.findOne(argThat(inMap))).thenReturn(createUser(username));
+		when(userRoleRepository.findByUserByUsernameUsername(username)).thenReturn(map.get(username));
 		try {
 			thrownException = null;
-			sut.loadUserByUsername(username);
+			userDetails = null;
+			userDetails = sut.loadUserByUsername(username);
 		} catch (final Exception e) {
 			thrownException = e;
 		}
@@ -77,6 +85,8 @@ public class UserDetailsServiceImplSteps {
 
 	private User createUser(final String username) {
 		final User user = new User();
+		user.setUsername(username);
+		user.setPassword("***");
 		return user;
 	}
 
@@ -85,4 +95,22 @@ public class UserDetailsServiceImplSteps {
 		assertThat(thrownException, instanceOf(UsernameNotFoundException.class));
 	}
 
+	@Then("there are no roles")
+	public void thereAreNoRoles() {
+		assertThat(userDetails.getAuthorities().size(), is(0));
+	}
+
+	@Then("the user gets these roles: $table")
+	public void theUserGetsTheseRoles(final ExamplesTable table) {
+		final List<String> listsExpected = new ArrayList<>();
+		for (final Map<String, String> row : table.getRows()) {
+			listsExpected.add(row.get("role"));
+		}
+		final Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+		final List<String> listActual = authorities.stream().map(x -> x.getAuthority()).collect(Collectors.toList());
+		assertThat(listActual.size(), equalTo(listsExpected.size()));
+		assertThat(listActual.containsAll(listsExpected), equalTo(true));
+		assertThat(listsExpected.containsAll(listActual), equalTo(true));
+
+	}
 }
