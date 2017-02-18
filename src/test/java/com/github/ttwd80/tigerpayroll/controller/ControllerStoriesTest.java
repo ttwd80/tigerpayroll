@@ -1,4 +1,4 @@
-package com.github.ttwd80.tigerpayroll.model.service;
+package com.github.ttwd80.tigerpayroll.controller;
 
 import static org.jbehave.core.reporters.Format.*;
 
@@ -12,11 +12,12 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
-public class ServiceStories extends JUnitStories {
+public class ControllerStoriesTest extends JUnitStories {
+
 	@Override
 	protected List<String> storyPaths() {
 		final List<String> list = new ArrayList<>();
-		list.add("com/github/ttwd80/tigerpayroll/model/service/UserDetailsServiceImpl.story");
+		list.add("com/github/ttwd80/tigerpayroll/controller/MainController.story");
 		return list;
 	}
 
@@ -33,7 +34,7 @@ public class ServiceStories extends JUnitStories {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		final List<Object> list = new ArrayList<>();
-		list.add(new UserDetailsServiceImplSteps());
+		list.add(new MainControllerSteps());
 		return new InstanceStepsFactory(configuration(), list);
 	}
 
