@@ -50,7 +50,6 @@ public class UserDetailsServiceImplSteps {
 		for (final Map<String, String> row : table.getRows()) {
 			map.put(row.get("username"), toListUserRole(row.get("roles")));
 		}
-
 	}
 
 	private List<UserRole> toListUserRole(final String csv) {

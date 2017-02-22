@@ -409,6 +409,11 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.9</version>
+				<configuration>
+					<excludes>
+						<exclude>com/github/ttwd80/tigerpayroll/model/entity/**/*</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
