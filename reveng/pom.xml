@@ -7,23 +7,48 @@
 	<artifactId>reveng</artifactId>
 	<version>0.1.0</version>
 	<properties>
-		<slf4j.version>1.7.22</slf4j.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<slf4j.version>1.7.23</slf4j.version>
+		<failsafe.version>2.19.1</failsafe.version>
+		<spring.version>4.3.6.RELEASE</spring.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>http://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>jboss</id>
-			<url>https://repository.jboss.org/nexus/content/groups/public</url>
-		</repository>
-	</repositories>
 	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.10.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-tools</artifactId>
-			<version>5.2.0.Final</version>
+			<version>5.2.1.Final</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -45,13 +70,13 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.8</version>
+			<version>1.2.1</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.10.6.RELEASE</version>
+			<version>1.11.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -84,6 +109,19 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${failsafe.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
