@@ -22,7 +22,11 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final StringPath address = createString("address");
+
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
+
+    public final DatePath<java.util.Date> dataOfBirth = createDate("dataOfBirth", java.util.Date.class);
 
     public final QDepartment department;
 
@@ -39,6 +43,10 @@ public class QUser extends EntityPathBase<User> {
     public final BooleanPath locked = createBoolean("locked");
 
     public final StringPath password = createString("password");
+
+    public final StringPath phoneCell = createString("phoneCell");
+
+    public final StringPath phoneOffice = createString("phoneOffice");
 
     public final SetPath<Role, QRole> rolesForCreatedBy = this.<Role, QRole>createSet("rolesForCreatedBy", Role.class, QRole.class, PathInits.DIRECT2);
 
