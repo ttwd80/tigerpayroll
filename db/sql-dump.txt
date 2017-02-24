@@ -1,3 +1,18 @@
+docker pull postgres
+docker run -p 127.0.0.1:5432:5432 --name tigerpayroll -e POSTGRES_PASSWORD=postgres -d postgres
+echo "localhost:5432:*:postgres:postgres" >  ~/.pgpass
+echo "localhost:5432:*:tigerhrdev:tigerhrdev" >>  ~/.pgpass
+psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
+
+psql -h localhost  -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;"
+psql -h localhost  -U tigerhrdev postgres -c "create database tigerhrdev;"
+psql -h localhost  -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
+psql -h localhost  -U tigerhrdev tigerhrdev < tigerhrdev.sql
+
+===
+pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
+
+ 
 sudo apt-get install postgresql-contrib libpq-dev 
 echo '*:*:tigerhrdev:tigerhrdev:tigerhrdev' > ~/.pgpass
 chmod 0600 ~/.pgpass
@@ -15,12 +30,8 @@ select crypt('user', gen_salt('bf', 10));
 $2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta
 
 
-pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev > tigerhrdev.sql 
-
-pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -v "^$"  | grep -v --  "^--" >  tigerhrdev.sql
-
 pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
-pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only  --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--"  | grep -v "^COMMENT"
+
 psql -h 127.0.0.1 -U tigerhrdev tigerhrdev < tigerhrdev.sql
 
 init
