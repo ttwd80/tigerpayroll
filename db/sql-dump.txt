@@ -7,7 +7,7 @@ psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhr
 psql -h localhost  -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;"
 psql -h localhost  -U tigerhrdev postgres -c "create database tigerhrdev;"
 psql -h localhost  -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
-psql -h localhost  -U tigerhrdev tigerhrdev < tigerhrdev.sql
+psql -h localhost  -U tigerhrdev tigerhrdev < tigerhrdev.sql | grep -v "^NOTICE"
 
 ===
 pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
