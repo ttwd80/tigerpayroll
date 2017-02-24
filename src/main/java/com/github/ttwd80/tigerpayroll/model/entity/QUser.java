@@ -24,6 +24,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
+    public final StringPath fullName = createString("fullName");
+
     public final QImage image;
 
     public final SetPath<Image, QImage> imagesForCreatedBy = this.<Image, QImage>createSet("imagesForCreatedBy", Image.class, QImage.class, PathInits.DIRECT2);

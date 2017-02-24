@@ -27,6 +27,7 @@ public class User  implements java.io.Serializable {
      private Image image;
      private User userByLastModifiedBy;
      private User userByCreatedBy;
+     private String fullName;
      private String password;
      private boolean locked;
      private ZonedDateTime createdDate;
@@ -44,16 +45,18 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String username, String password, boolean locked) {
+    public User(String username, String fullName, String password, boolean locked) {
         this.username = username;
+        this.fullName = fullName;
         this.password = password;
         this.locked = locked;
     }
-    public User(String username, Image image, User userByLastModifiedBy, User userByCreatedBy, String password, boolean locked, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Image image, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.image = image;
        this.userByLastModifiedBy = userByLastModifiedBy;
        this.userByCreatedBy = userByCreatedBy;
+       this.fullName = fullName;
        this.password = password;
        this.locked = locked;
        this.createdDate = createdDate;
@@ -110,6 +113,16 @@ public class User  implements java.io.Serializable {
     
     public void setUserByCreatedBy(User userByCreatedBy) {
         this.userByCreatedBy = userByCreatedBy;
+    }
+
+    
+    @Column(name="full_name", nullable=false, length=100)
+    public String getFullName() {
+        return this.fullName;
+    }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     
