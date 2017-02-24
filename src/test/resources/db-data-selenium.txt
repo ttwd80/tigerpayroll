@@ -1,6 +1,6 @@
-insert into "user" values ('admin','$2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq', false, null, 'admin', null, now(), null);
+insert into "user" values ('admin', 'Administrator', '$2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq', false, null, null, null, null, null, null, 'admin', null, now(), null);
 insert into "role" values ('ROLE_ADMIN', 'admin', null, now(), null);
 insert into "user_role" values (DEFAULT, 'admin', 'ROLE_ADMIN', 'admin', null, now(), null);
-insert into "user" values ('user','$2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta', false, null, 'admin', null, now(), null);
+insert into "user" values ('user', 'Sample User', '$2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta', false, null, null, null, null, null, null, 'admin', null, now(), null);
 insert into "role" values ('ROLE_USER', 'admin', null, now(), null);
 insert into "user_role" values (DEFAULT, 'user', 'ROLE_USER', 'admin', null, now(), null);

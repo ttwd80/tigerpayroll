@@ -11,7 +11,7 @@ psql -q -h localhost -U tigerhrdev tigerhrdev < tigerhrdev.sql 2>&1 | grep -v "^
 
 ===
 pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
-
+psql -h localhost -U tigerhrdev tigerhrdev
  
 sudo apt-get install postgresql-contrib libpq-dev 
 echo '*:*:tigerhrdev:tigerhrdev:tigerhrdev' > ~/.pgpass
