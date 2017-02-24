@@ -4,10 +4,10 @@ echo "localhost:5432:*:postgres:postgres" >  ~/.pgpass
 echo "localhost:5432:*:tigerhrdev:tigerhrdev" >>  ~/.pgpass
 psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
 
-psql -h localhost  -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;"
-psql -h localhost  -U tigerhrdev postgres -c "create database tigerhrdev;"
-psql -h localhost  -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
-psql -h localhost  -U tigerhrdev tigerhrdev < tigerhrdev.sql | grep -v "^NOTICE"
+psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;"
+psql -q -h localhost -U tigerhrdev postgres -c "create database tigerhrdev;"
+psql -q -h localhost -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
+psql -q -h localhost -U tigerhrdev tigerhrdev < tigerhrdev.sql 2>&1 | grep -v "^NOTICE:"
 
 ===
 pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
