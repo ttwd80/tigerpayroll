@@ -70,6 +70,15 @@ public class UserRepositoryIT extends BaseRepositoryIT {
 	}
 
 	@Test
+	public void testPrimaryKeyOnUsername() {
+		final User user1 = createUser("user");
+		final User user2 = createUser("user");
+		userRepository.save(user1);
+		userRepository.save(user2);
+		assertEquals(1L, userRepository.count());
+	}
+
+	@Test
 	public void testModifiedAfterCreated() {
 		User user = createUser("user");
 		userRepository.save(user);
