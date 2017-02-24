@@ -24,6 +24,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
+    public final QDepartment department;
+
     public final StringPath fullName = createString("fullName");
 
     public final QImage image;
@@ -74,6 +76,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
         this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
         this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;

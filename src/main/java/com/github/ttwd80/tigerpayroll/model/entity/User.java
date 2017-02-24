@@ -24,6 +24,7 @@ public class User  implements java.io.Serializable {
 
 
      private String username;
+     private Department department;
      private Image image;
      private User userByLastModifiedBy;
      private User userByCreatedBy;
@@ -51,8 +52,9 @@ public class User  implements java.io.Serializable {
         this.password = password;
         this.locked = locked;
     }
-    public User(String username, Image image, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Image image, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
+       this.department = department;
        this.image = image;
        this.userByLastModifiedBy = userByLastModifiedBy;
        this.userByCreatedBy = userByCreatedBy;
@@ -81,6 +83,16 @@ public class User  implements java.io.Serializable {
     
     public void setUsername(String username) {
         this.username = username;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="department_id")
+    public Department getDepartment() {
+        return this.department;
+    }
+    
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

@@ -2,9 +2,13 @@ package com.github.ttwd80.tigerpayroll.model.entity;
 
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -17,39 +21,41 @@ import javax.persistence.Table;
 public class Department  implements java.io.Serializable {
 
 
-     private Integer id;
+     private String id;
      private String name;
      private String createdBy;
      private String lastModifiedBy;
      private ZonedDateTime createdDate;
      private ZonedDateTime lastModifiedDate;
+     private Set<User> users = new HashSet<User>(0);
 
     public Department() {
     }
 
 	
-    public Department(Integer id, String name) {
+    public Department(String id, String name) {
         this.id = id;
         this.name = name;
     }
-    public Department(Integer id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate) {
+    public Department(String id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
        this.id = id;
        this.name = name;
        this.createdBy = createdBy;
        this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
        this.lastModifiedDate = lastModifiedDate;
+       this.users = users;
     }
    
      @Id 
 
     
-    @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
+    @Column(name="id", unique=true, nullable=false, length=10)
+    public String getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -103,6 +109,15 @@ public class Department  implements java.io.Serializable {
     
     public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="department")
+    public Set<User> getUsers() {
+        return this.users;
+    }
+    
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
 
