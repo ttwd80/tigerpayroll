@@ -1,6 +1,7 @@
 package com.github.ttwd80.tigerpayroll.model.entity;
 
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -49,7 +50,7 @@ public class User  implements java.io.Serializable {
      private String socsoStatus;
      private String epfNo;
      private String incomeTaxNo;
-     private double basicSalary;
+     private BigDecimal basicSalary;
      private ZonedDateTime createdDate;
      private ZonedDateTime lastModifiedDate;
      private Set<Role> rolesForLastModifiedBy = new HashSet<Role>(0);
@@ -65,14 +66,14 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String username, String fullName, String password, boolean locked, double basicSalary) {
+    public User(String username, String fullName, String password, boolean locked, BigDecimal basicSalary) {
         this.username = username;
         this.fullName = fullName;
         this.password = password;
         this.locked = locked;
         this.basicSalary = basicSalary;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String socsoStatus, String epfNo, String incomeTaxNo, double basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String socsoStatus, String epfNo, String incomeTaxNo, BigDecimal basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
@@ -344,12 +345,12 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="basic_salary", nullable=false, scale=0)
-    public double getBasicSalary() {
+    @Column(name="basic_salary", nullable=false, precision=16)
+    public BigDecimal getBasicSalary() {
         return this.basicSalary;
     }
     
-    public void setBasicSalary(double basicSalary) {
+    public void setBasicSalary(BigDecimal basicSalary) {
         this.basicSalary = basicSalary;
     }
 

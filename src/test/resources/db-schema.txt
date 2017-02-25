@@ -115,7 +115,7 @@ CREATE TABLE "user" (
     "socso_status" socso_status,
     "epf_no" character varying(20),
     "income_tax_no" character varying(20),
-    "basic_salary" money NOT NULL,
+    "basic_salary" numeric(16,2) NOT NULL,
     "image_id" integer,
     "created_by" character varying(20),
     "last_modified_by" character varying(20),
