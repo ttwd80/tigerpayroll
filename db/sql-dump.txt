@@ -9,6 +9,8 @@ psql -q -h localhost -U tigerhrdev postgres -c "create database tigerhrdev;"
 psql -q -h localhost -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
 psql -q -h localhost -U tigerhrdev tigerhrdev < tigerhrdev.sql 2>&1 | grep -v "^NOTICE:"
 
+psql -q -h localhost -U tigerhrdev tigerhrdev < /Users/ttwangsa/Documents/workspace-sts-3.8.3.RELEASE/tigerpayroll/src/test/resources/db-data-selenium.txt 
+
 psql -h localhost -U tigerhrdev tigerhrdev
 ===
 pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql

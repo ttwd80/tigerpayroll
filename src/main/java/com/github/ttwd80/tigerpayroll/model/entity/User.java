@@ -28,6 +28,7 @@ public class User  implements java.io.Serializable {
 
      private String username;
      private Department department;
+     private Gender gender;
      private Image image;
      private Race race;
      private User userByLastModifiedBy;
@@ -60,9 +61,10 @@ public class User  implements java.io.Serializable {
         this.password = password;
         this.locked = locked;
     }
-    public User(String username, Department department, Image image, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
+       this.gender = gender;
        this.image = image;
        this.race = race;
        this.userByLastModifiedBy = userByLastModifiedBy;
@@ -106,6 +108,16 @@ public class User  implements java.io.Serializable {
     
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="gender_id")
+    public Gender getGender() {
+        return this.gender;
+    }
+    
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

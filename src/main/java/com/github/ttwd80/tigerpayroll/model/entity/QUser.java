@@ -32,6 +32,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath fullName = createString("fullName");
 
+    public final QGender gender;
+
     public final QImage image;
 
     public final SetPath<Image, QImage> imagesForCreatedBy = this.<Image, QImage>createSet("imagesForCreatedBy", Image.class, QImage.class, PathInits.DIRECT2);
@@ -87,6 +89,7 @@ public class QUser extends EntityPathBase<User> {
     public QUser(Class<? extends User> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
+        this.gender = inits.isInitialized("gender") ? new QGender(forProperty("gender")) : null;
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
         this.race = inits.isInitialized("race") ? new QRace(forProperty("race")) : null;
         this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
