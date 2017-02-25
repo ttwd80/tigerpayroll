@@ -36,9 +36,15 @@ DROP SEQUENCE IF EXISTS "public"."image_id_seq";
 DROP TABLE IF EXISTS "public"."image";
 DROP TABLE IF EXISTS "public"."gender";
 DROP TABLE IF EXISTS "public"."department";
+DROP TYPE IF EXISTS "public"."socso_status";
 DROP SCHEMA IF EXISTS "public";
 CREATE SCHEMA "public";
 COMMENT ON SCHEMA "public" IS 'standard public schema';
+CREATE TYPE "socso_status" AS ENUM (
+    'Y',
+    'A',
+    'N'
+);
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
@@ -93,7 +99,6 @@ CREATE TABLE "role" (
     "created_date" timestamp with time zone,
     "last_modified_date" timestamp with time zone
 );
-CREATE TYPE socso_status AS ENUM ('Y', 'A', 'N');
 CREATE TABLE "user" (
     "username" character varying(20) NOT NULL,
     "full_name" character varying(100) NOT NULL,
@@ -112,7 +117,7 @@ CREATE TABLE "user" (
     "qualification_academic" character varying(100),
     "qualification_professional" character varying(100),
     "socso_no" character varying(20),
-    "socso_status" socso_status,
+    "socso_status" "socso_status",
     "epf_no" character varying(20),
     "income_tax_no" character varying(20),
     "basic_salary" numeric(16,2) NOT NULL,
