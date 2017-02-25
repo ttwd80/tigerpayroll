@@ -30,6 +30,7 @@ public class User  implements java.io.Serializable {
      private Department department;
      private Gender gender;
      private Image image;
+     private MaritalStatus maritalStatus;
      private Race race;
      private User userByLastModifiedBy;
      private User userByCreatedBy;
@@ -61,11 +62,12 @@ public class User  implements java.io.Serializable {
         this.password = password;
         this.locked = locked;
     }
-    public User(String username, Department department, Gender gender, Image image, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
        this.image = image;
+       this.maritalStatus = maritalStatus;
        this.race = race;
        this.userByLastModifiedBy = userByLastModifiedBy;
        this.userByCreatedBy = userByCreatedBy;
@@ -128,6 +130,16 @@ public class User  implements java.io.Serializable {
     
     public void setImage(Image image) {
         this.image = image;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="marital_status_id")
+    public MaritalStatus getMaritalStatus() {
+        return this.maritalStatus;
+    }
+    
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

@@ -44,6 +44,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final BooleanPath locked = createBoolean("locked");
 
+    public final QMaritalStatus maritalStatus;
+
     public final StringPath password = createString("password");
 
     public final StringPath phoneCell = createString("phoneCell");
@@ -91,6 +93,7 @@ public class QUser extends EntityPathBase<User> {
         this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
         this.gender = inits.isInitialized("gender") ? new QGender(forProperty("gender")) : null;
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
+        this.maritalStatus = inits.isInitialized("maritalStatus") ? new QMaritalStatus(forProperty("maritalStatus")) : null;
         this.race = inits.isInitialized("race") ? new QRace(forProperty("race")) : null;
         this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
         this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
