@@ -24,11 +24,17 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath address = createString("address");
 
+    public final NumberPath<Double> basicSalary = createNumber("basicSalary", Double.class);
+
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
+
+    public final DatePath<java.util.Date> dataJoined = createDate("dataJoined", java.util.Date.class);
 
     public final DatePath<java.util.Date> dataOfBirth = createDate("dataOfBirth", java.util.Date.class);
 
     public final QDepartment department;
+
+    public final StringPath epfNo = createString("epfNo");
 
     public final StringPath fullName = createString("fullName");
 
@@ -39,6 +45,10 @@ public class QUser extends EntityPathBase<User> {
     public final SetPath<Image, QImage> imagesForCreatedBy = this.<Image, QImage>createSet("imagesForCreatedBy", Image.class, QImage.class, PathInits.DIRECT2);
 
     public final SetPath<Image, QImage> imagesForLastModifiedBy = this.<Image, QImage>createSet("imagesForLastModifiedBy", Image.class, QImage.class, PathInits.DIRECT2);
+
+    public final StringPath incomeTaxNo = createString("incomeTaxNo");
+
+    public final StringPath jobTitle = createString("jobTitle");
 
     public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
@@ -52,11 +62,19 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phoneOffice = createString("phoneOffice");
 
+    public final StringPath qualificationAcademic = createString("qualificationAcademic");
+
+    public final StringPath qualificationProfessional = createString("qualificationProfessional");
+
     public final QRace race;
 
     public final SetPath<Role, QRole> rolesForCreatedBy = this.<Role, QRole>createSet("rolesForCreatedBy", Role.class, QRole.class, PathInits.DIRECT2);
 
     public final SetPath<Role, QRole> rolesForLastModifiedBy = this.<Role, QRole>createSet("rolesForLastModifiedBy", Role.class, QRole.class, PathInits.DIRECT2);
+
+    public final StringPath socsoNo = createString("socsoNo");
+
+    public final StringPath socsoStatus = createString("socsoStatus");
 
     public final QUser userByCreatedBy;
 

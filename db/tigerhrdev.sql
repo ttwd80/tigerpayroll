@@ -93,6 +93,7 @@ CREATE TABLE "role" (
     "created_date" timestamp with time zone,
     "last_modified_date" timestamp with time zone
 );
+CREATE TYPE socso_status AS ENUM ('Y', 'A', 'N');
 CREATE TABLE "user" (
     "username" character varying(20) NOT NULL,
     "full_name" character varying(100) NOT NULL,
@@ -106,6 +107,15 @@ CREATE TABLE "user" (
     "gender_id" character(1),
     "data_of_birth" "date",
     "marital_status_id" character(1),
+    "data_joined" "date",
+    "job_title" character varying(100),
+    "qualification_academic" character varying(100),
+    "qualification_professional" character varying(100),
+    "socso_no" character varying(20),
+    "socso_status" socso_status,
+    "epf_no" character varying(20),
+    "income_tax_no" character varying(20),
+    "basic_salary" money NOT NULL,
     "image_id" integer,
     "created_by" character varying(20),
     "last_modified_by" character varying(20),

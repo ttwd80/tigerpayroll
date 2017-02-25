@@ -41,6 +41,15 @@ public class User  implements java.io.Serializable {
      private String phoneCell;
      private String phoneOffice;
      private Date dataOfBirth;
+     private Date dataJoined;
+     private String jobTitle;
+     private String qualificationAcademic;
+     private String qualificationProfessional;
+     private String socsoNo;
+     private String socsoStatus;
+     private String epfNo;
+     private String incomeTaxNo;
+     private double basicSalary;
      private ZonedDateTime createdDate;
      private ZonedDateTime lastModifiedDate;
      private Set<Role> rolesForLastModifiedBy = new HashSet<Role>(0);
@@ -56,13 +65,14 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(String username, String fullName, String password, boolean locked) {
+    public User(String username, String fullName, String password, boolean locked, double basicSalary) {
         this.username = username;
         this.fullName = fullName;
         this.password = password;
         this.locked = locked;
+        this.basicSalary = basicSalary;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String socsoStatus, String epfNo, String incomeTaxNo, double basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
@@ -78,6 +88,15 @@ public class User  implements java.io.Serializable {
        this.phoneCell = phoneCell;
        this.phoneOffice = phoneOffice;
        this.dataOfBirth = dataOfBirth;
+       this.dataJoined = dataJoined;
+       this.jobTitle = jobTitle;
+       this.qualificationAcademic = qualificationAcademic;
+       this.qualificationProfessional = qualificationProfessional;
+       this.socsoNo = socsoNo;
+       this.socsoStatus = socsoStatus;
+       this.epfNo = epfNo;
+       this.incomeTaxNo = incomeTaxNo;
+       this.basicSalary = basicSalary;
        this.createdDate = createdDate;
        this.lastModifiedDate = lastModifiedDate;
        this.rolesForLastModifiedBy = rolesForLastModifiedBy;
@@ -242,6 +261,96 @@ public class User  implements java.io.Serializable {
     
     public void setDataOfBirth(Date dataOfBirth) {
         this.dataOfBirth = dataOfBirth;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="data_joined", length=13)
+    public Date getDataJoined() {
+        return this.dataJoined;
+    }
+    
+    public void setDataJoined(Date dataJoined) {
+        this.dataJoined = dataJoined;
+    }
+
+    
+    @Column(name="job_title", length=100)
+    public String getJobTitle() {
+        return this.jobTitle;
+    }
+    
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    
+    @Column(name="qualification_academic", length=100)
+    public String getQualificationAcademic() {
+        return this.qualificationAcademic;
+    }
+    
+    public void setQualificationAcademic(String qualificationAcademic) {
+        this.qualificationAcademic = qualificationAcademic;
+    }
+
+    
+    @Column(name="qualification_professional", length=100)
+    public String getQualificationProfessional() {
+        return this.qualificationProfessional;
+    }
+    
+    public void setQualificationProfessional(String qualificationProfessional) {
+        this.qualificationProfessional = qualificationProfessional;
+    }
+
+    
+    @Column(name="socso_no", length=20)
+    public String getSocsoNo() {
+        return this.socsoNo;
+    }
+    
+    public void setSocsoNo(String socsoNo) {
+        this.socsoNo = socsoNo;
+    }
+
+    
+    @Column(name="socso_status")
+    public String getSocsoStatus() {
+        return this.socsoStatus;
+    }
+    
+    public void setSocsoStatus(String socsoStatus) {
+        this.socsoStatus = socsoStatus;
+    }
+
+    
+    @Column(name="epf_no", length=20)
+    public String getEpfNo() {
+        return this.epfNo;
+    }
+    
+    public void setEpfNo(String epfNo) {
+        this.epfNo = epfNo;
+    }
+
+    
+    @Column(name="income_tax_no", length=20)
+    public String getIncomeTaxNo() {
+        return this.incomeTaxNo;
+    }
+    
+    public void setIncomeTaxNo(String incomeTaxNo) {
+        this.incomeTaxNo = incomeTaxNo;
+    }
+
+    
+    @Column(name="basic_salary", nullable=false, scale=0)
+    public double getBasicSalary() {
+        return this.basicSalary;
+    }
+    
+    public void setBasicSalary(double basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     
