@@ -33,6 +33,7 @@ public class User  implements java.io.Serializable {
      private Image image;
      private MaritalStatus maritalStatus;
      private Race race;
+     private SocsoStatus socsoStatus;
      private User userByLastModifiedBy;
      private User userByCreatedBy;
      private String fullName;
@@ -47,7 +48,6 @@ public class User  implements java.io.Serializable {
      private String qualificationAcademic;
      private String qualificationProfessional;
      private String socsoNo;
-     private String socsoStatus;
      private String epfNo;
      private String incomeTaxNo;
      private BigDecimal basicSalary;
@@ -73,13 +73,14 @@ public class User  implements java.io.Serializable {
         this.locked = locked;
         this.basicSalary = basicSalary;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String socsoStatus, String epfNo, String incomeTaxNo, BigDecimal basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
        this.image = image;
        this.maritalStatus = maritalStatus;
        this.race = race;
+       this.socsoStatus = socsoStatus;
        this.userByLastModifiedBy = userByLastModifiedBy;
        this.userByCreatedBy = userByCreatedBy;
        this.fullName = fullName;
@@ -94,7 +95,6 @@ public class User  implements java.io.Serializable {
        this.qualificationAcademic = qualificationAcademic;
        this.qualificationProfessional = qualificationProfessional;
        this.socsoNo = socsoNo;
-       this.socsoStatus = socsoStatus;
        this.epfNo = epfNo;
        this.incomeTaxNo = incomeTaxNo;
        this.basicSalary = basicSalary;
@@ -170,6 +170,16 @@ public class User  implements java.io.Serializable {
     
     public void setRace(Race race) {
         this.race = race;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="socso_status_id")
+    public SocsoStatus getSocsoStatus() {
+        return this.socsoStatus;
+    }
+    
+    public void setSocsoStatus(SocsoStatus socsoStatus) {
+        this.socsoStatus = socsoStatus;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -312,16 +322,6 @@ public class User  implements java.io.Serializable {
     
     public void setSocsoNo(String socsoNo) {
         this.socsoNo = socsoNo;
-    }
-
-    
-    @Column(name="socso_status")
-    public String getSocsoStatus() {
-        return this.socsoStatus;
-    }
-    
-    public void setSocsoStatus(String socsoStatus) {
-        this.socsoStatus = socsoStatus;
     }
 
     

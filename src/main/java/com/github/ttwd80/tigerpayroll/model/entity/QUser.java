@@ -74,7 +74,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath socsoNo = createString("socsoNo");
 
-    public final StringPath socsoStatus = createString("socsoStatus");
+    public final QSocsoStatus socsoStatus;
 
     public final QUser userByCreatedBy;
 
@@ -113,6 +113,7 @@ public class QUser extends EntityPathBase<User> {
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
         this.maritalStatus = inits.isInitialized("maritalStatus") ? new QMaritalStatus(forProperty("maritalStatus")) : null;
         this.race = inits.isInitialized("race") ? new QRace(forProperty("race")) : null;
+        this.socsoStatus = inits.isInitialized("socsoStatus") ? new QSocsoStatus(forProperty("socsoStatus")) : null;
         this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
         this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
     }

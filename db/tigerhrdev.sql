@@ -1,3 +1,4 @@
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_socso_status_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_username_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_role_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_last_modified_by_fkey";
@@ -12,12 +13,14 @@ ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_last_
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_created_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_created_by_fkey";
+DROP INDEX IF EXISTS "public"."fki_user_socso_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_race_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_marital_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_gender_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_username_role_id_key";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."socso_status" DROP CONSTRAINT IF EXISTS "socso_status_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."race" DROP CONSTRAINT IF EXISTS "race_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."marital_status" DROP CONSTRAINT IF EXISTS "marital_status_pkey";
@@ -29,6 +32,7 @@ ALTER TABLE IF EXISTS "public"."image" ALTER COLUMN "id" DROP DEFAULT;
 DROP SEQUENCE IF EXISTS "public"."user_role_id_seq";
 DROP TABLE IF EXISTS "public"."user_role";
 DROP TABLE IF EXISTS "public"."user";
+DROP TABLE IF EXISTS "public"."socso_status";
 DROP TABLE IF EXISTS "public"."role";
 DROP TABLE IF EXISTS "public"."race";
 DROP TABLE IF EXISTS "public"."marital_status";
@@ -36,15 +40,9 @@ DROP SEQUENCE IF EXISTS "public"."image_id_seq";
 DROP TABLE IF EXISTS "public"."image";
 DROP TABLE IF EXISTS "public"."gender";
 DROP TABLE IF EXISTS "public"."department";
-DROP TYPE IF EXISTS "public"."socso_status";
 DROP SCHEMA IF EXISTS "public";
 CREATE SCHEMA "public";
 COMMENT ON SCHEMA "public" IS 'standard public schema';
-CREATE TYPE "socso_status" AS ENUM (
-    'Y',
-    'A',
-    'N'
-);
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
@@ -99,6 +97,15 @@ CREATE TABLE "role" (
     "created_date" timestamp with time zone,
     "last_modified_date" timestamp with time zone
 );
+CREATE TABLE "socso_status" (
+    "id" character(1) NOT NULL,
+    "label" character varying(100) NOT NULL,
+    "note" character varying(100),
+    "created_by" character varying(20),
+    "last_modified_by" character varying(20),
+    "created_date" timestamp with time zone,
+    "last_modified_date" timestamp with time zone
+);
 CREATE TABLE "user" (
     "username" character varying(20) NOT NULL,
     "full_name" character varying(100) NOT NULL,
@@ -117,7 +124,7 @@ CREATE TABLE "user" (
     "qualification_academic" character varying(100),
     "qualification_professional" character varying(100),
     "socso_no" character varying(20),
-    "socso_status" "socso_status",
+    "socso_status_id" character(1),
     "epf_no" character varying(20),
     "income_tax_no" character varying(20),
     "basic_salary" numeric(16,2) NOT NULL,
@@ -157,6 +164,8 @@ ALTER TABLE ONLY "race"
     ADD CONSTRAINT "race_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "socso_status"
+    ADD CONSTRAINT "socso_status_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_pkey" PRIMARY KEY ("username");
 ALTER TABLE ONLY "user_role"
@@ -166,6 +175,7 @@ ALTER TABLE ONLY "user_role"
 CREATE INDEX "fki_user_gender_id_fkey" ON "user" USING "btree" ("gender_id");
 CREATE INDEX "fki_user_marital_status_id_fkey" ON "user" USING "btree" ("marital_status_id");
 CREATE INDEX "fki_user_race_id_fkey" ON "user" USING "btree" ("race_id");
+CREATE INDEX "fki_user_socso_status_id_fkey" ON "user" USING "btree" ("socso_status_id");
 ALTER TABLE ONLY "image"
     ADD CONSTRAINT "image_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "image"
@@ -194,3 +204,5 @@ ALTER TABLE ONLY "user_role"
     ADD CONSTRAINT "user_role_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "role"("id");
 ALTER TABLE ONLY "user_role"
     ADD CONSTRAINT "user_role_username_fkey" FOREIGN KEY ("username") REFERENCES "user"("username");
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_socso_status_id_fkey" FOREIGN KEY ("socso_status_id") REFERENCES "socso_status"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
