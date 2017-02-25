@@ -1,6 +1,6 @@
 package com.github.ttwd80.tigerpayroll.db;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,52 +38,52 @@ public class DatabaseSchemaIT extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void testClean() {
-		List<String> tablenames = readTableNames();
+		final List<String> tablenames = readTableNames();
 		clean(tablenames);
 		assertEquals(0, countTotalTables());
 	}
 
 	@Test
 	public void testCreateScript() {
-		List<String> tablenames = readTableNames();
+		final List<String> tablenames = readTableNames();
 		clean(tablenames);
-		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(jdbcScript);
+		final ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(jdbcScript);
 		resourceDatabasePopulator.setContinueOnError(false);
 		resourceDatabasePopulator.execute(dataSource);
-		assertEquals(4, countTotalTables());
+		assertEquals(5, countTotalTables());
 
 	}
 
 	private int countTotalTables() {
-		String sql = "select count(*) from information_schema.tables where table_schema = 'public'";
+		final String sql = "select count(*) from information_schema.tables where table_schema = 'public'";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 
-	private void clean(List<String> tablenames) {
-		String command = "DROP TABLE IF EXISTS \"%s\" CASCADE";
-		for (String tablename : tablenames) {
-			String sql = String.format(command, tablename);
+	private void clean(final List<String> tablenames) {
+		final String command = "DROP TABLE IF EXISTS \"%s\" CASCADE";
+		for (final String tablename : tablenames) {
+			final String sql = String.format(command, tablename);
 			jdbcTemplate.execute(sql);
 		}
 
 	}
 
 	private List<String> readTableNames() {
-		List<String> items = new ArrayList<>();
+		final List<String> items = new ArrayList<>();
 		try (InputStream is = jdbcScript.getInputStream()) {
-			List<String> lines = IOUtils.readLines(is, "UTF-8");
-			for (String line : lines) {
+			final List<String> lines = IOUtils.readLines(is, "UTF-8");
+			for (final String line : lines) {
 				if (line.startsWith("CREATE TABLE ")) {
-					String[] words = line.split(" ");
-					String word = words[2];
-					int n = word.length();
+					final String[] words = line.split(" ");
+					final String word = words[2];
+					final int n = word.length();
 					if (word.charAt(0) == '\"' && word.charAt(n - 1) == '\"') {
 						items.add(word.substring(1, n - 1));
 					}
 				}
 			}
 			return items;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
