@@ -29,6 +29,7 @@ public class User  implements java.io.Serializable {
      private String username;
      private Department department;
      private Image image;
+     private Race race;
      private User userByLastModifiedBy;
      private User userByCreatedBy;
      private String fullName;
@@ -59,10 +60,11 @@ public class User  implements java.io.Serializable {
         this.password = password;
         this.locked = locked;
     }
-    public User(String username, Department department, Image image, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Image image, Race race, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
        this.username = username;
        this.department = department;
        this.image = image;
+       this.race = race;
        this.userByLastModifiedBy = userByLastModifiedBy;
        this.userByCreatedBy = userByCreatedBy;
        this.fullName = fullName;
@@ -114,6 +116,16 @@ public class User  implements java.io.Serializable {
     
     public void setImage(Image image) {
         this.image = image;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="race_id")
+    public Race getRace() {
+        return this.race;
+    }
+    
+    public void setRace(Race race) {
+        this.race = race;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

@@ -48,6 +48,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phoneOffice = createString("phoneOffice");
 
+    public final QRace race;
+
     public final SetPath<Role, QRole> rolesForCreatedBy = this.<Role, QRole>createSet("rolesForCreatedBy", Role.class, QRole.class, PathInits.DIRECT2);
 
     public final SetPath<Role, QRole> rolesForLastModifiedBy = this.<Role, QRole>createSet("rolesForLastModifiedBy", Role.class, QRole.class, PathInits.DIRECT2);
@@ -86,6 +88,7 @@ public class QUser extends EntityPathBase<User> {
         super(type, metadata, inits);
         this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
+        this.race = inits.isInitialized("race") ? new QRace(forProperty("race")) : null;
         this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
         this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
     }
