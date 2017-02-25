@@ -9,7 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<slf4j.version>1.7.23</slf4j.version>
+		<slf4j.version>1.7.24</slf4j.version>
 		<failsafe.version>2.19.1</failsafe.version>
 		<spring.version>4.3.6.RELEASE</spring.version>
 	</properties>
@@ -92,8 +92,9 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.4.1212.jre7</version>
+			<version>42.0.0.jre7</version>
 		</dependency>
+        
 		<!-- Query DSL -->
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
