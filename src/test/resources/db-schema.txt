@@ -7,15 +7,27 @@ ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_marit
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_image_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_gender_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_department_id_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_username_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_created_by_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_allowance_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_created_by_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_last_modified_by_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_created_by_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_socso_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_race_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_marital_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_gender_id_fkey";
+DROP INDEX IF EXISTS "public"."fki_user_allowance_username_fkey";
+DROP INDEX IF EXISTS "public"."fki_user_allowance_created_by_fkey";
+DROP INDEX IF EXISTS "public"."fki_user_allowance_allowance_id_fkey";
+DROP INDEX IF EXISTS "public"."fki_allowance_last_modified_by_fkey";
+DROP INDEX IF EXISTS "public"."fki_allowance_created_by_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "username_allowance_id_unique";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_username_role_id_key";
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."socso_status" DROP CONSTRAINT IF EXISTS "socso_status_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."race" DROP CONSTRAINT IF EXISTS "race_pkey";
@@ -23,10 +35,14 @@ ALTER TABLE IF EXISTS ONLY "public"."marital_status" DROP CONSTRAINT IF EXISTS "
 ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."gender" DROP CONSTRAINT IF EXISTS "gender_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."department" DROP CONSTRAINT IF EXISTS "department_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_pkey";
 ALTER TABLE IF EXISTS "public"."user_role" ALTER COLUMN "id" DROP DEFAULT;
+ALTER TABLE IF EXISTS "public"."user_allowance" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."image" ALTER COLUMN "id" DROP DEFAULT;
 DROP SEQUENCE IF EXISTS "public"."user_role_id_seq";
 DROP TABLE IF EXISTS "public"."user_role";
+DROP SEQUENCE IF EXISTS "public"."user_allowance_id_seq";
+DROP TABLE IF EXISTS "public"."user_allowance";
 DROP TABLE IF EXISTS "public"."user";
 DROP TABLE IF EXISTS "public"."socso_status";
 DROP TABLE IF EXISTS "public"."role";
@@ -36,9 +52,19 @@ DROP SEQUENCE IF EXISTS "public"."image_id_seq";
 DROP TABLE IF EXISTS "public"."image";
 DROP TABLE IF EXISTS "public"."gender";
 DROP TABLE IF EXISTS "public"."department";
+DROP TABLE IF EXISTS "public"."allowance";
 DROP SCHEMA IF EXISTS "public";
 CREATE SCHEMA "public";
 COMMENT ON SCHEMA "public" IS 'standard public schema';
+CREATE TABLE "allowance" (
+    "id" character(1) NOT NULL,
+    "name" character varying(20) NOT NULL,
+    "amount" numeric(7,2) NOT NULL,
+    "created_by" character varying(20),
+    "last_modified_by" character varying(20),
+    "created_date" timestamp with time zone,
+    "last_modified_date" timestamp with time zone
+);
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
@@ -126,6 +152,20 @@ CREATE TABLE "user" (
     "created_date" timestamp with time zone,
     "last_modified_date" timestamp with time zone
 );
+CREATE TABLE "user_allowance" (
+    "id" integer NOT NULL,
+    "username" character varying(20) NOT NULL,
+    "allowance_id" character(1) NOT NULL,
+    "created_by" character varying(20),
+    "created_date" timestamp with time zone
+);
+CREATE SEQUENCE "user_allowance_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE "user_allowance_id_seq" OWNED BY "user_allowance"."id";
 CREATE TABLE "user_role" (
     "id" integer NOT NULL,
     "username" character varying(20) NOT NULL,
@@ -143,7 +183,10 @@ CREATE SEQUENCE "user_role_id_seq"
     CACHE 1;
 ALTER SEQUENCE "user_role_id_seq" OWNED BY "user_role"."id";
 ALTER TABLE ONLY "image" ALTER COLUMN "id" SET DEFAULT "nextval"('"image_id_seq"'::"regclass");
+ALTER TABLE ONLY "user_allowance" ALTER COLUMN "id" SET DEFAULT "nextval"('"user_allowance_id_seq"'::"regclass");
 ALTER TABLE ONLY "user_role" ALTER COLUMN "id" SET DEFAULT "nextval"('"user_role_id_seq"'::"regclass");
+ALTER TABLE ONLY "allowance"
+    ADD CONSTRAINT "allowance_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "department"
     ADD CONSTRAINT "department_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "gender"
@@ -158,20 +201,39 @@ ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "socso_status"
     ADD CONSTRAINT "socso_status_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "user_allowance"
+    ADD CONSTRAINT "user_allowance_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_pkey" PRIMARY KEY ("username");
 ALTER TABLE ONLY "user_role"
     ADD CONSTRAINT "user_role_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "user_role"
     ADD CONSTRAINT "user_role_username_role_id_key" UNIQUE ("username", "role_id");
+ALTER TABLE ONLY "user_allowance"
+    ADD CONSTRAINT "username_allowance_id_unique" UNIQUE ("username", "allowance_id");
+CREATE INDEX "fki_allowance_created_by_fkey" ON "allowance" USING "btree" ("created_by");
+CREATE INDEX "fki_allowance_last_modified_by_fkey" ON "allowance" USING "btree" ("last_modified_by");
+CREATE INDEX "fki_user_allowance_allowance_id_fkey" ON "user_allowance" USING "btree" ("allowance_id");
+CREATE INDEX "fki_user_allowance_created_by_fkey" ON "user_allowance" USING "btree" ("created_by");
+CREATE INDEX "fki_user_allowance_username_fkey" ON "user_allowance" USING "btree" ("username");
 CREATE INDEX "fki_user_gender_id_fkey" ON "user" USING "btree" ("gender_id");
 CREATE INDEX "fki_user_marital_status_id_fkey" ON "user" USING "btree" ("marital_status_id");
 CREATE INDEX "fki_user_race_id_fkey" ON "user" USING "btree" ("race_id");
 CREATE INDEX "fki_user_socso_status_id_fkey" ON "user" USING "btree" ("socso_status_id");
+ALTER TABLE ONLY "allowance"
+    ADD CONSTRAINT "allowance_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "allowance"
+    ADD CONSTRAINT "allowance_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "user_allowance"
+    ADD CONSTRAINT "user_allowance_allowance_id_fkey" FOREIGN KEY ("allowance_id") REFERENCES "allowance"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "user_allowance"
+    ADD CONSTRAINT "user_allowance_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "user_allowance"
+    ADD CONSTRAINT "user_allowance_username_fkey" FOREIGN KEY ("username") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
