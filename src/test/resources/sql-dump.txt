@@ -16,6 +16,7 @@ psql -q -h localhost -U tigerhrdev tigerhrdev < db-schema.txt 2>&1 | grep -v "^N
 psql -h localhost -U tigerhrdev tigerhrdev
 ===
 pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  db-schema.txt
+pg_dump -U tigerhrdev -h localhost -w --data-only --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  db-schema.txt
 psql -h localhost -U tigerhrdev tigerhrdev
 
 docker ps

@@ -11,8 +11,6 @@ ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_depar
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_created_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_created_by_fkey";
-ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_last_modified_by_fkey";
-ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_created_by_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_socso_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_race_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_marital_status_id_fkey";
@@ -61,11 +59,7 @@ CREATE TABLE "gender" (
 );
 CREATE TABLE "image" (
     "id" integer NOT NULL,
-    "image" "bytea" NOT NULL,
-    "created_by" character varying(20),
-    "last_modified_by" character varying(20),
-    "created_date" timestamp with time zone,
-    "last_modified_date" timestamp with time zone
+    "image" "bytea" NOT NULL
 );
 CREATE SEQUENCE "image_id_seq"
     START WITH 1
@@ -176,10 +170,6 @@ CREATE INDEX "fki_user_gender_id_fkey" ON "user" USING "btree" ("gender_id");
 CREATE INDEX "fki_user_marital_status_id_fkey" ON "user" USING "btree" ("marital_status_id");
 CREATE INDEX "fki_user_race_id_fkey" ON "user" USING "btree" ("race_id");
 CREATE INDEX "fki_user_socso_status_id_fkey" ON "user" USING "btree" ("socso_status_id");
-ALTER TABLE ONLY "image"
-    ADD CONSTRAINT "image_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
-ALTER TABLE ONLY "image"
-    ADD CONSTRAINT "image_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "role"
