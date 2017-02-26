@@ -4,11 +4,9 @@ ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_
 ALTER TABLE IF EXISTS ONLY "public"."user_role" DROP CONSTRAINT IF EXISTS "user_role_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_race_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_marital_status_id_fkey";
-ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_image_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_gender_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_department_id_fkey";
-ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_created_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_created_by_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_socso_status_id_fkey";
@@ -175,15 +173,11 @@ ALTER TABLE ONLY "role"
 ALTER TABLE ONLY "role"
     ADD CONSTRAINT "role_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
-    ADD CONSTRAINT "user_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
-ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_gender_id_fkey" FOREIGN KEY ("gender_id") REFERENCES "gender"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_image_id_fkey" FOREIGN KEY ("image_id") REFERENCES "image"("id");
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT "user_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_marital_status_id_fkey" FOREIGN KEY ("marital_status_id") REFERENCES "marital_status"("id");
 ALTER TABLE ONLY "user"
