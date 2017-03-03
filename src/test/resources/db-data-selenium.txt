@@ -6,4 +6,6 @@ SELECT pg_catalog.setval('"image_id_seq"', 1, false);
 INSERT INTO "role" ("id", "created_by", "last_modified_by", "created_date", "last_modified_date") VALUES ('ROLE_ADMIN', NULL, NULL, NULL, NULL);
 INSERT INTO "role" ("id", "created_by", "last_modified_by", "created_date", "last_modified_date") VALUES ('ROLE_USER', NULL, NULL, NULL, NULL);
 SELECT pg_catalog.setval('"user_allowance_id_seq"', 1, false);
-SELECT pg_catalog.setval('"user_role_id_seq"', 1, false);
+INSERT INTO "user_role" ("id", "username", "role_id", "created_by", "last_modified_by", "created_date", "last_modified_date") VALUES (1, 'admin', 'ROLE_ADMIN', 'admin', NULL, '2017-02-26 08:49:27.794805+00', NULL);
+INSERT INTO "user_role" ("id", "username", "role_id", "created_by", "last_modified_by", "created_date", "last_modified_date") VALUES (2, 'user', 'ROLE_USER', 'admin', NULL, '2017-02-26 08:49:27.814454+00', NULL);
+SELECT pg_catalog.setval('"user_role_id_seq"', 2, true);

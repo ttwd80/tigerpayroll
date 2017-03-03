@@ -14,10 +14,6 @@ psql -q -h localhost -U tigerhrdev tigerhrdev < db-schema.txt 2>&1 | grep -v "^N
 
 
 
-psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdb;"
-psql -q -h localhost -U postgres tigerhrdb -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
-
-
 psql -h localhost -U tigerhrdev tigerhrdev < db-data-selenium.txt
 psql -h localhost -U tigerhrdev tigerhrdev
 ===
@@ -29,6 +25,13 @@ docker ps
 docker stop tigerpayroll
 docker rm tigerpayroll
 docker ps
+
+
+psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdb;" | grep -v "^NOTICE:"
+psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdb;"
+psql -q -h localhost -U postgres tigerhrdb -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
+psql -q -h localhost -U tigerhrdev tigerhrdb < db-schema.txt 2>&1 | grep -v "^NOTICE:"
+psql -h localhost -U tigerhrdev tigerhrdb < db-data-selenium.txt
  
 sudo apt-get install postgresql-contrib libpq-dev 
 echo '*:*:tigerhrdev:tigerhrdev:tigerhrdev' > ~/.pgpass
