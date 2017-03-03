@@ -20,6 +20,8 @@ public class QGender extends EntityPathBase<Gender> {
 
     public static final QGender gender = new QGender("gender");
 
+    public final SetPath<Child, QChild> childs = this.<Child, QChild>createSet("childs", Child.class, QChild.class, PathInits.DIRECT2);
+
     public final StringPath createdBy = createString("createdBy");
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);

@@ -28,6 +28,7 @@ public class Gender  implements java.io.Serializable {
      private ZonedDateTime createdDate;
      private ZonedDateTime lastModifiedDate;
      private Set<User> users = new HashSet<User>(0);
+     private Set<Child> childs = new HashSet<Child>(0);
 
     public Gender() {
     }
@@ -37,7 +38,7 @@ public class Gender  implements java.io.Serializable {
         this.id = id;
         this.name = name;
     }
-    public Gender(Character id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
+    public Gender(Character id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users, Set<Child> childs) {
        this.id = id;
        this.name = name;
        this.createdBy = createdBy;
@@ -45,6 +46,7 @@ public class Gender  implements java.io.Serializable {
        this.createdDate = createdDate;
        this.lastModifiedDate = lastModifiedDate;
        this.users = users;
+       this.childs = childs;
     }
    
      @Id 
@@ -118,6 +120,15 @@ public class Gender  implements java.io.Serializable {
     
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="gender")
+    public Set<Child> getChilds() {
+        return this.childs;
+    }
+    
+    public void setChilds(Set<Child> childs) {
+        this.childs = childs;
     }
 
 

@@ -76,6 +76,7 @@ public class User  implements java.io.Serializable {
      private Set<UserRole> userRolesForUsername = new HashSet<UserRole>(0);
      private Set<Allowance> allowancesForLastModifiedBy = new HashSet<Allowance>(0);
      private Set<UserAllowance> userAllowancesForUsername = new HashSet<UserAllowance>(0);
+     private Set<Child> childs = new HashSet<Child>(0);
      private Set<UserAllowance> userAllowancesForCreatedBy = new HashSet<UserAllowance>(0);
      private Set<Allowance> allowancesForCreatedBy = new HashSet<Allowance>(0);
      private Set<Role> rolesForCreatedBy = new HashSet<Role>(0);
@@ -94,7 +95,7 @@ public class User  implements java.io.Serializable {
         this.bankAccountName = bankAccountName;
         this.bankAccountNumber = bankAccountNumber;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<Child> childs, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
@@ -144,6 +145,7 @@ public class User  implements java.io.Serializable {
        this.userRolesForUsername = userRolesForUsername;
        this.allowancesForLastModifiedBy = allowancesForLastModifiedBy;
        this.userAllowancesForUsername = userAllowancesForUsername;
+       this.childs = childs;
        this.userAllowancesForCreatedBy = userAllowancesForCreatedBy;
        this.allowancesForCreatedBy = allowancesForCreatedBy;
        this.rolesForCreatedBy = rolesForCreatedBy;
@@ -636,6 +638,15 @@ public class User  implements java.io.Serializable {
     
     public void setUserAllowancesForUsername(Set<UserAllowance> userAllowancesForUsername) {
         this.userAllowancesForUsername = userAllowancesForUsername;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+    public Set<Child> getChilds() {
+        return this.childs;
+    }
+    
+    public void setChilds(Set<Child> childs) {
+        this.childs = childs;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByCreatedBy")

@@ -36,6 +36,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<java.math.BigDecimal> basicSalary = createNumber("basicSalary", java.math.BigDecimal.class);
 
+    public final SetPath<Child, QChild> childs = this.<Child, QChild>createSet("childs", Child.class, QChild.class, PathInits.DIRECT2);
+
     public final StringPath createdBy = createString("createdBy");
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
