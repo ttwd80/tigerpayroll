@@ -59,6 +59,7 @@ COMMENT ON SCHEMA "public" IS 'standard public schema';
 CREATE TABLE "allowance" (
     "id" character(1) NOT NULL,
     "name" character varying(20) NOT NULL,
+    "position" integer,
     "amount" numeric(7,2) NOT NULL,
     "created_by" character varying(20),
     "last_modified_by" character varying(20),
