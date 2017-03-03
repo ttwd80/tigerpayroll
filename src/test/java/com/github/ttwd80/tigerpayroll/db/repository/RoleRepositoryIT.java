@@ -1,6 +1,6 @@
-package com.github.ttwd80.tigerpayroll.db.repsitory;
+package com.github.ttwd80.tigerpayroll.db.repository;
 
-import static com.github.ttwd80.tigerpayroll.db.repsitory.RoleRepositoryTestHelper.createRole;
+import static com.github.ttwd80.tigerpayroll.db.repository.RoleRepositoryTestHelper.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;

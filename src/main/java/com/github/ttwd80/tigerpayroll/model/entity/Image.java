@@ -1,7 +1,6 @@
 package com.github.ttwd80.tigerpayroll.model.entity;
 
 
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -9,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,11 +24,7 @@ public class Image  implements java.io.Serializable {
 
 
      private Integer id;
-     private User userByCreatedBy;
-     private User userByLastModifiedBy;
      private byte[] image;
-     private ZonedDateTime createdDate;
-     private ZonedDateTime lastModifiedDate;
      private Set<User> users = new HashSet<User>(0);
 
     public Image() {
@@ -41,12 +34,8 @@ public class Image  implements java.io.Serializable {
     public Image(byte[] image) {
         this.image = image;
     }
-    public Image(User userByCreatedBy, User userByLastModifiedBy, byte[] image, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
-       this.userByCreatedBy = userByCreatedBy;
-       this.userByLastModifiedBy = userByLastModifiedBy;
+    public Image(byte[] image, Set<User> users) {
        this.image = image;
-       this.createdDate = createdDate;
-       this.lastModifiedDate = lastModifiedDate;
        this.users = users;
     }
    
@@ -62,28 +51,6 @@ public class Image  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="created_by")
-    @org.springframework.data.annotation.CreatedBy
-    public User getUserByCreatedBy() {
-        return this.userByCreatedBy;
-    }
-    
-    public void setUserByCreatedBy(User userByCreatedBy) {
-        this.userByCreatedBy = userByCreatedBy;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="last_modified_by")
-    @org.springframework.data.annotation.LastModifiedBy
-    public User getUserByLastModifiedBy() {
-        return this.userByLastModifiedBy;
-    }
-    
-    public void setUserByLastModifiedBy(User userByLastModifiedBy) {
-        this.userByLastModifiedBy = userByLastModifiedBy;
-    }
-
     
     @Column(name="image", nullable=false)
     public byte[] getImage() {
@@ -92,28 +59,6 @@ public class Image  implements java.io.Serializable {
     
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    
-    @Column(name="created_date", length=35)
-    @org.springframework.data.annotation.CreatedDate
-    public ZonedDateTime getCreatedDate() {
-        return this.createdDate;
-    }
-    
-    public void setCreatedDate(ZonedDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    
-    @Column(name="last_modified_date", length=35)
-    @org.springframework.data.annotation.LastModifiedDate
-    public ZonedDateTime getLastModifiedDate() {
-        return this.lastModifiedDate;
-    }
-    
-    public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="image")

@@ -6,6 +6,7 @@
 	<type-mapping>
 		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" />
 		<sql-type jdbc-type="TIMESTAMP" hibernate-type="java.time.ZonedDateTime" />
+		<sql-type jdbc-type="CHAR" length="1" hibernate-type="java.lang.Character" />
 	</type-mapping>
 
 

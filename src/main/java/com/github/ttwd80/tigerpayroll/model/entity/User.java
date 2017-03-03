@@ -34,16 +34,14 @@ public class User  implements java.io.Serializable {
      private MaritalStatus maritalStatus;
      private Race race;
      private SocsoStatus socsoStatus;
-     private User userByLastModifiedBy;
-     private User userByCreatedBy;
      private String fullName;
      private String password;
      private boolean locked;
      private String address;
-     private String phoneCell;
+     private String phoneHandphone;
      private String phoneOffice;
-     private Date dataOfBirth;
-     private Date dataJoined;
+     private Date dateOfBirth;
+     private Date dateJoined;
      private String jobTitle;
      private String qualificationAcademic;
      private String qualificationProfessional;
@@ -51,29 +49,52 @@ public class User  implements java.io.Serializable {
      private String epfNo;
      private String incomeTaxNo;
      private BigDecimal basicSalary;
+     private String bankAccountName;
+     private String bankAccountNumber;
+     private String bankBranchName;
+     private String oldIc;
+     private String newIc;
+     private String icColour;
+     private String passportNo;
+     private String workPermitNo;
+     private String nameAddressPreviousEmployer;
+     private String spouseName;
+     private String spouseSpouseOldIc;
+     private String spouseSpouseNewIc;
+     private String spouseDateOfBirth;
+     private String spousePhoneHandphone;
+     private String spousePhoneOffice;
+     private Boolean spouseWorking;
+     private String spouseIncomeTaxNo;
+     private Date spouseAddress;
+     private String createdBy;
+     private String lastModifiedBy;
      private ZonedDateTime createdDate;
      private ZonedDateTime lastModifiedDate;
      private Set<Role> rolesForLastModifiedBy = new HashSet<Role>(0);
-     private Set<User> usersForLastModifiedBy = new HashSet<User>(0);
      private Set<UserRole> userRolesForLastModifiedBy = new HashSet<UserRole>(0);
      private Set<UserRole> userRolesForUsername = new HashSet<UserRole>(0);
-     private Set<User> usersForCreatedBy = new HashSet<User>(0);
-     private Set<Image> imagesForCreatedBy = new HashSet<Image>(0);
+     private Set<Allowance> allowancesForLastModifiedBy = new HashSet<Allowance>(0);
+     private Set<UserAllowance> userAllowancesForUsername = new HashSet<UserAllowance>(0);
+     private Set<UserAllowance> userAllowancesForCreatedBy = new HashSet<UserAllowance>(0);
+     private Set<Allowance> allowancesForCreatedBy = new HashSet<Allowance>(0);
      private Set<Role> rolesForCreatedBy = new HashSet<Role>(0);
-     private Set<Image> imagesForLastModifiedBy = new HashSet<Image>(0);
 
     public User() {
     }
 
 	
-    public User(String username, String fullName, String password, boolean locked, BigDecimal basicSalary) {
+    public User(String username, Gender gender, String fullName, String password, boolean locked, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber) {
         this.username = username;
+        this.gender = gender;
         this.fullName = fullName;
         this.password = password;
         this.locked = locked;
         this.basicSalary = basicSalary;
+        this.bankAccountName = bankAccountName;
+        this.bankAccountNumber = bankAccountNumber;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, User userByLastModifiedBy, User userByCreatedBy, String fullName, String password, boolean locked, String address, String phoneCell, String phoneOffice, Date dataOfBirth, Date dataJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<User> usersForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<User> usersForCreatedBy, Set<Image> imagesForCreatedBy, Set<Role> rolesForCreatedBy, Set<Image> imagesForLastModifiedBy) {
+    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
        this.username = username;
        this.department = department;
        this.gender = gender;
@@ -81,16 +102,14 @@ public class User  implements java.io.Serializable {
        this.maritalStatus = maritalStatus;
        this.race = race;
        this.socsoStatus = socsoStatus;
-       this.userByLastModifiedBy = userByLastModifiedBy;
-       this.userByCreatedBy = userByCreatedBy;
        this.fullName = fullName;
        this.password = password;
        this.locked = locked;
        this.address = address;
-       this.phoneCell = phoneCell;
+       this.phoneHandphone = phoneHandphone;
        this.phoneOffice = phoneOffice;
-       this.dataOfBirth = dataOfBirth;
-       this.dataJoined = dataJoined;
+       this.dateOfBirth = dateOfBirth;
+       this.dateJoined = dateJoined;
        this.jobTitle = jobTitle;
        this.qualificationAcademic = qualificationAcademic;
        this.qualificationProfessional = qualificationProfessional;
@@ -98,16 +117,36 @@ public class User  implements java.io.Serializable {
        this.epfNo = epfNo;
        this.incomeTaxNo = incomeTaxNo;
        this.basicSalary = basicSalary;
+       this.bankAccountName = bankAccountName;
+       this.bankAccountNumber = bankAccountNumber;
+       this.bankBranchName = bankBranchName;
+       this.oldIc = oldIc;
+       this.newIc = newIc;
+       this.icColour = icColour;
+       this.passportNo = passportNo;
+       this.workPermitNo = workPermitNo;
+       this.nameAddressPreviousEmployer = nameAddressPreviousEmployer;
+       this.spouseName = spouseName;
+       this.spouseSpouseOldIc = spouseSpouseOldIc;
+       this.spouseSpouseNewIc = spouseSpouseNewIc;
+       this.spouseDateOfBirth = spouseDateOfBirth;
+       this.spousePhoneHandphone = spousePhoneHandphone;
+       this.spousePhoneOffice = spousePhoneOffice;
+       this.spouseWorking = spouseWorking;
+       this.spouseIncomeTaxNo = spouseIncomeTaxNo;
+       this.spouseAddress = spouseAddress;
+       this.createdBy = createdBy;
+       this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
        this.lastModifiedDate = lastModifiedDate;
        this.rolesForLastModifiedBy = rolesForLastModifiedBy;
-       this.usersForLastModifiedBy = usersForLastModifiedBy;
        this.userRolesForLastModifiedBy = userRolesForLastModifiedBy;
        this.userRolesForUsername = userRolesForUsername;
-       this.usersForCreatedBy = usersForCreatedBy;
-       this.imagesForCreatedBy = imagesForCreatedBy;
+       this.allowancesForLastModifiedBy = allowancesForLastModifiedBy;
+       this.userAllowancesForUsername = userAllowancesForUsername;
+       this.userAllowancesForCreatedBy = userAllowancesForCreatedBy;
+       this.allowancesForCreatedBy = allowancesForCreatedBy;
        this.rolesForCreatedBy = rolesForCreatedBy;
-       this.imagesForLastModifiedBy = imagesForLastModifiedBy;
     }
    
      @Id 
@@ -133,7 +172,7 @@ public class User  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="gender_id")
+    @JoinColumn(name="gender_id", nullable=false)
     public Gender getGender() {
         return this.gender;
     }
@@ -182,28 +221,6 @@ public class User  implements java.io.Serializable {
         this.socsoStatus = socsoStatus;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="last_modified_by")
-    @org.springframework.data.annotation.LastModifiedBy
-    public User getUserByLastModifiedBy() {
-        return this.userByLastModifiedBy;
-    }
-    
-    public void setUserByLastModifiedBy(User userByLastModifiedBy) {
-        this.userByLastModifiedBy = userByLastModifiedBy;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="created_by")
-    @org.springframework.data.annotation.CreatedBy
-    public User getUserByCreatedBy() {
-        return this.userByCreatedBy;
-    }
-    
-    public void setUserByCreatedBy(User userByCreatedBy) {
-        this.userByCreatedBy = userByCreatedBy;
-    }
-
     
     @Column(name="full_name", nullable=false, length=100)
     public String getFullName() {
@@ -245,13 +262,13 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="phone_cell", length=20)
-    public String getPhoneCell() {
-        return this.phoneCell;
+    @Column(name="phone_handphone", length=20)
+    public String getPhoneHandphone() {
+        return this.phoneHandphone;
     }
     
-    public void setPhoneCell(String phoneCell) {
-        this.phoneCell = phoneCell;
+    public void setPhoneHandphone(String phoneHandphone) {
+        this.phoneHandphone = phoneHandphone;
     }
 
     
@@ -265,23 +282,23 @@ public class User  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="data_of_birth", length=13)
-    public Date getDataOfBirth() {
-        return this.dataOfBirth;
+    @Column(name="date_of_birth", length=13)
+    public Date getDateOfBirth() {
+        return this.dateOfBirth;
     }
     
-    public void setDataOfBirth(Date dataOfBirth) {
-        this.dataOfBirth = dataOfBirth;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="data_joined", length=13)
-    public Date getDataJoined() {
-        return this.dataJoined;
+    @Column(name="date_joined", length=13)
+    public Date getDateJoined() {
+        return this.dateJoined;
     }
     
-    public void setDataJoined(Date dataJoined) {
-        this.dataJoined = dataJoined;
+    public void setDateJoined(Date dateJoined) {
+        this.dateJoined = dateJoined;
     }
 
     
@@ -355,6 +372,206 @@ public class User  implements java.io.Serializable {
     }
 
     
+    @Column(name="bank_account_name", nullable=false, length=100)
+    public String getBankAccountName() {
+        return this.bankAccountName;
+    }
+    
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+    }
+
+    
+    @Column(name="bank_account_number", nullable=false, length=30)
+    public String getBankAccountNumber() {
+        return this.bankAccountNumber;
+    }
+    
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    
+    @Column(name="bank_branch_name", length=100)
+    public String getBankBranchName() {
+        return this.bankBranchName;
+    }
+    
+    public void setBankBranchName(String bankBranchName) {
+        this.bankBranchName = bankBranchName;
+    }
+
+    
+    @Column(name="old_ic", length=20)
+    public String getOldIc() {
+        return this.oldIc;
+    }
+    
+    public void setOldIc(String oldIc) {
+        this.oldIc = oldIc;
+    }
+
+    
+    @Column(name="new_ic", length=20)
+    public String getNewIc() {
+        return this.newIc;
+    }
+    
+    public void setNewIc(String newIc) {
+        this.newIc = newIc;
+    }
+
+    
+    @Column(name="ic_colour", length=25)
+    public String getIcColour() {
+        return this.icColour;
+    }
+    
+    public void setIcColour(String icColour) {
+        this.icColour = icColour;
+    }
+
+    
+    @Column(name="passport_no", length=25)
+    public String getPassportNo() {
+        return this.passportNo;
+    }
+    
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
+    }
+
+    
+    @Column(name="work_permit_no", length=25)
+    public String getWorkPermitNo() {
+        return this.workPermitNo;
+    }
+    
+    public void setWorkPermitNo(String workPermitNo) {
+        this.workPermitNo = workPermitNo;
+    }
+
+    
+    @Column(name="name_address_previous_employer")
+    public String getNameAddressPreviousEmployer() {
+        return this.nameAddressPreviousEmployer;
+    }
+    
+    public void setNameAddressPreviousEmployer(String nameAddressPreviousEmployer) {
+        this.nameAddressPreviousEmployer = nameAddressPreviousEmployer;
+    }
+
+    
+    @Column(name="spouse_name", length=100)
+    public String getSpouseName() {
+        return this.spouseName;
+    }
+    
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    
+    @Column(name="spouse_spouse_old_ic", length=20)
+    public String getSpouseSpouseOldIc() {
+        return this.spouseSpouseOldIc;
+    }
+    
+    public void setSpouseSpouseOldIc(String spouseSpouseOldIc) {
+        this.spouseSpouseOldIc = spouseSpouseOldIc;
+    }
+
+    
+    @Column(name="spouse_spouse_new_ic", length=20)
+    public String getSpouseSpouseNewIc() {
+        return this.spouseSpouseNewIc;
+    }
+    
+    public void setSpouseSpouseNewIc(String spouseSpouseNewIc) {
+        this.spouseSpouseNewIc = spouseSpouseNewIc;
+    }
+
+    
+    @Column(name="spouse_date_of_birth")
+    public String getSpouseDateOfBirth() {
+        return this.spouseDateOfBirth;
+    }
+    
+    public void setSpouseDateOfBirth(String spouseDateOfBirth) {
+        this.spouseDateOfBirth = spouseDateOfBirth;
+    }
+
+    
+    @Column(name="spouse_phone_handphone", length=20)
+    public String getSpousePhoneHandphone() {
+        return this.spousePhoneHandphone;
+    }
+    
+    public void setSpousePhoneHandphone(String spousePhoneHandphone) {
+        this.spousePhoneHandphone = spousePhoneHandphone;
+    }
+
+    
+    @Column(name="spouse_phone_office", length=20)
+    public String getSpousePhoneOffice() {
+        return this.spousePhoneOffice;
+    }
+    
+    public void setSpousePhoneOffice(String spousePhoneOffice) {
+        this.spousePhoneOffice = spousePhoneOffice;
+    }
+
+    
+    @Column(name="spouse_working")
+    public Boolean getSpouseWorking() {
+        return this.spouseWorking;
+    }
+    
+    public void setSpouseWorking(Boolean spouseWorking) {
+        this.spouseWorking = spouseWorking;
+    }
+
+    
+    @Column(name="spouse_income_tax_no", length=20)
+    public String getSpouseIncomeTaxNo() {
+        return this.spouseIncomeTaxNo;
+    }
+    
+    public void setSpouseIncomeTaxNo(String spouseIncomeTaxNo) {
+        this.spouseIncomeTaxNo = spouseIncomeTaxNo;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name="spouse_address", length=13)
+    public Date getSpouseAddress() {
+        return this.spouseAddress;
+    }
+    
+    public void setSpouseAddress(Date spouseAddress) {
+        this.spouseAddress = spouseAddress;
+    }
+
+    
+    @Column(name="created_by", length=20)
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    
     @Column(name="created_date", length=35)
     @org.springframework.data.annotation.CreatedDate
     public ZonedDateTime getCreatedDate() {
@@ -386,15 +603,6 @@ public class User  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByLastModifiedBy")
-    public Set<User> getUsersForLastModifiedBy() {
-        return this.usersForLastModifiedBy;
-    }
-    
-    public void setUsersForLastModifiedBy(Set<User> usersForLastModifiedBy) {
-        this.usersForLastModifiedBy = usersForLastModifiedBy;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="userByLastModifiedBy")
     public Set<UserRole> getUserRolesForLastModifiedBy() {
         return this.userRolesForLastModifiedBy;
     }
@@ -412,22 +620,40 @@ public class User  implements java.io.Serializable {
         this.userRolesForUsername = userRolesForUsername;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="userByCreatedBy")
-    public Set<User> getUsersForCreatedBy() {
-        return this.usersForCreatedBy;
+@OneToMany(fetch=FetchType.LAZY, mappedBy="userByLastModifiedBy")
+    public Set<Allowance> getAllowancesForLastModifiedBy() {
+        return this.allowancesForLastModifiedBy;
     }
     
-    public void setUsersForCreatedBy(Set<User> usersForCreatedBy) {
-        this.usersForCreatedBy = usersForCreatedBy;
+    public void setAllowancesForLastModifiedBy(Set<Allowance> allowancesForLastModifiedBy) {
+        this.allowancesForLastModifiedBy = allowancesForLastModifiedBy;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="userByUsername")
+    public Set<UserAllowance> getUserAllowancesForUsername() {
+        return this.userAllowancesForUsername;
+    }
+    
+    public void setUserAllowancesForUsername(Set<UserAllowance> userAllowancesForUsername) {
+        this.userAllowancesForUsername = userAllowancesForUsername;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByCreatedBy")
-    public Set<Image> getImagesForCreatedBy() {
-        return this.imagesForCreatedBy;
+    public Set<UserAllowance> getUserAllowancesForCreatedBy() {
+        return this.userAllowancesForCreatedBy;
     }
     
-    public void setImagesForCreatedBy(Set<Image> imagesForCreatedBy) {
-        this.imagesForCreatedBy = imagesForCreatedBy;
+    public void setUserAllowancesForCreatedBy(Set<UserAllowance> userAllowancesForCreatedBy) {
+        this.userAllowancesForCreatedBy = userAllowancesForCreatedBy;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="userByCreatedBy")
+    public Set<Allowance> getAllowancesForCreatedBy() {
+        return this.allowancesForCreatedBy;
+    }
+    
+    public void setAllowancesForCreatedBy(Set<Allowance> allowancesForCreatedBy) {
+        this.allowancesForCreatedBy = allowancesForCreatedBy;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByCreatedBy")
@@ -437,15 +663,6 @@ public class User  implements java.io.Serializable {
     
     public void setRolesForCreatedBy(Set<Role> rolesForCreatedBy) {
         this.rolesForCreatedBy = rolesForCreatedBy;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="userByLastModifiedBy")
-    public Set<Image> getImagesForLastModifiedBy() {
-        return this.imagesForLastModifiedBy;
-    }
-    
-    public void setImagesForLastModifiedBy(Set<Image> imagesForLastModifiedBy) {
-        this.imagesForLastModifiedBy = imagesForLastModifiedBy;
     }
 
 

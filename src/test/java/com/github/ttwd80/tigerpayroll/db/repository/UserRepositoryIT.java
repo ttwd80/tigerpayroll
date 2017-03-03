@@ -1,6 +1,6 @@
-package com.github.ttwd80.tigerpayroll.db.repsitory;
+package com.github.ttwd80.tigerpayroll.db.repository;
 
-import static com.github.ttwd80.tigerpayroll.db.repsitory.UserRepositoryTestHelper.*;
+import static com.github.ttwd80.tigerpayroll.db.repository.UserRepositoryTestHelper.*;
 import static org.junit.Assert.*;
 
 import java.time.ZonedDateTime;
@@ -9,7 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.ttwd80.tigerpayroll.model.entity.Gender;
 import com.github.ttwd80.tigerpayroll.model.entity.User;
+import com.github.ttwd80.tigerpayroll.model.repository.GenderRepository;
 import com.github.ttwd80.tigerpayroll.model.repository.UserRepository;
 
 public class UserRepositoryIT extends BaseRepositoryIT {
@@ -17,11 +19,18 @@ public class UserRepositoryIT extends BaseRepositoryIT {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	GenderRepository genderRepository;
+
 	@Override
 	@Before
 	public void setUp() {
 		super.setUp();
 		userRepository.deleteAll();
+		genderRepository.deleteAll();
+
+		genderRepository.save(new Gender(new Character('M'), "Male"));
+
 	}
 
 	@Test

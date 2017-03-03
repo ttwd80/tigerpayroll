@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class SocsoStatus  implements java.io.Serializable {
 
 
-     private char id;
+     private Character id;
      private String label;
      private String note;
      private String createdBy;
@@ -34,11 +34,11 @@ public class SocsoStatus  implements java.io.Serializable {
     }
 
 	
-    public SocsoStatus(char id, String label) {
+    public SocsoStatus(Character id, String label) {
         this.id = id;
         this.label = label;
     }
-    public SocsoStatus(char id, String label, String note, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
+    public SocsoStatus(Character id, String label, String note, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
        this.id = id;
        this.label = label;
        this.note = note;
@@ -53,11 +53,11 @@ public class SocsoStatus  implements java.io.Serializable {
 
     
     @Column(name="id", unique=true, nullable=false, length=1)
-    public char getId() {
+    public Character getId() {
         return this.id;
     }
     
-    public void setId(char id) {
+    public void setId(Character id) {
         this.id = id;
     }
 

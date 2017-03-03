@@ -24,13 +24,25 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath address = createString("address");
 
+    public final SetPath<Allowance, QAllowance> allowancesForCreatedBy = this.<Allowance, QAllowance>createSet("allowancesForCreatedBy", Allowance.class, QAllowance.class, PathInits.DIRECT2);
+
+    public final SetPath<Allowance, QAllowance> allowancesForLastModifiedBy = this.<Allowance, QAllowance>createSet("allowancesForLastModifiedBy", Allowance.class, QAllowance.class, PathInits.DIRECT2);
+
+    public final StringPath bankAccountName = createString("bankAccountName");
+
+    public final StringPath bankAccountNumber = createString("bankAccountNumber");
+
+    public final StringPath bankBranchName = createString("bankBranchName");
+
     public final NumberPath<java.math.BigDecimal> basicSalary = createNumber("basicSalary", java.math.BigDecimal.class);
+
+    public final StringPath createdBy = createString("createdBy");
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
 
-    public final DatePath<java.util.Date> dataJoined = createDate("dataJoined", java.util.Date.class);
+    public final DatePath<java.util.Date> dateJoined = createDate("dateJoined", java.util.Date.class);
 
-    public final DatePath<java.util.Date> dataOfBirth = createDate("dataOfBirth", java.util.Date.class);
+    public final DatePath<java.util.Date> dateOfBirth = createDate("dateOfBirth", java.util.Date.class);
 
     public final QDepartment department;
 
@@ -40,15 +52,15 @@ public class QUser extends EntityPathBase<User> {
 
     public final QGender gender;
 
+    public final StringPath icColour = createString("icColour");
+
     public final QImage image;
-
-    public final SetPath<Image, QImage> imagesForCreatedBy = this.<Image, QImage>createSet("imagesForCreatedBy", Image.class, QImage.class, PathInits.DIRECT2);
-
-    public final SetPath<Image, QImage> imagesForLastModifiedBy = this.<Image, QImage>createSet("imagesForLastModifiedBy", Image.class, QImage.class, PathInits.DIRECT2);
 
     public final StringPath incomeTaxNo = createString("incomeTaxNo");
 
     public final StringPath jobTitle = createString("jobTitle");
+
+    public final StringPath lastModifiedBy = createString("lastModifiedBy");
 
     public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
@@ -56,9 +68,17 @@ public class QUser extends EntityPathBase<User> {
 
     public final QMaritalStatus maritalStatus;
 
+    public final StringPath nameAddressPreviousEmployer = createString("nameAddressPreviousEmployer");
+
+    public final StringPath newIc = createString("newIc");
+
+    public final StringPath oldIc = createString("oldIc");
+
+    public final StringPath passportNo = createString("passportNo");
+
     public final StringPath password = createString("password");
 
-    public final StringPath phoneCell = createString("phoneCell");
+    public final StringPath phoneHandphone = createString("phoneHandphone");
 
     public final StringPath phoneOffice = createString("phoneOffice");
 
@@ -76,9 +96,27 @@ public class QUser extends EntityPathBase<User> {
 
     public final QSocsoStatus socsoStatus;
 
-    public final QUser userByCreatedBy;
+    public final DatePath<java.util.Date> spouseAddress = createDate("spouseAddress", java.util.Date.class);
 
-    public final QUser userByLastModifiedBy;
+    public final StringPath spouseDateOfBirth = createString("spouseDateOfBirth");
+
+    public final StringPath spouseIncomeTaxNo = createString("spouseIncomeTaxNo");
+
+    public final StringPath spouseName = createString("spouseName");
+
+    public final StringPath spousePhoneHandphone = createString("spousePhoneHandphone");
+
+    public final StringPath spousePhoneOffice = createString("spousePhoneOffice");
+
+    public final StringPath spouseSpouseNewIc = createString("spouseSpouseNewIc");
+
+    public final StringPath spouseSpouseOldIc = createString("spouseSpouseOldIc");
+
+    public final BooleanPath spouseWorking = createBoolean("spouseWorking");
+
+    public final SetPath<UserAllowance, QUserAllowance> userAllowancesForCreatedBy = this.<UserAllowance, QUserAllowance>createSet("userAllowancesForCreatedBy", UserAllowance.class, QUserAllowance.class, PathInits.DIRECT2);
+
+    public final SetPath<UserAllowance, QUserAllowance> userAllowancesForUsername = this.<UserAllowance, QUserAllowance>createSet("userAllowancesForUsername", UserAllowance.class, QUserAllowance.class, PathInits.DIRECT2);
 
     public final StringPath username = createString("username");
 
@@ -86,9 +124,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final SetPath<UserRole, QUserRole> userRolesForUsername = this.<UserRole, QUserRole>createSet("userRolesForUsername", UserRole.class, QUserRole.class, PathInits.DIRECT2);
 
-    public final SetPath<User, QUser> usersForCreatedBy = this.<User, QUser>createSet("usersForCreatedBy", User.class, QUser.class, PathInits.DIRECT2);
-
-    public final SetPath<User, QUser> usersForLastModifiedBy = this.<User, QUser>createSet("usersForLastModifiedBy", User.class, QUser.class, PathInits.DIRECT2);
+    public final StringPath workPermitNo = createString("workPermitNo");
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
@@ -110,12 +146,10 @@ public class QUser extends EntityPathBase<User> {
         super(type, metadata, inits);
         this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
         this.gender = inits.isInitialized("gender") ? new QGender(forProperty("gender")) : null;
-        this.image = inits.isInitialized("image") ? new QImage(forProperty("image"), inits.get("image")) : null;
+        this.image = inits.isInitialized("image") ? new QImage(forProperty("image")) : null;
         this.maritalStatus = inits.isInitialized("maritalStatus") ? new QMaritalStatus(forProperty("maritalStatus")) : null;
         this.race = inits.isInitialized("race") ? new QRace(forProperty("race")) : null;
         this.socsoStatus = inits.isInitialized("socsoStatus") ? new QSocsoStatus(forProperty("socsoStatus")) : null;
-        this.userByCreatedBy = inits.isInitialized("userByCreatedBy") ? new QUser(forProperty("userByCreatedBy"), inits.get("userByCreatedBy")) : null;
-        this.userByLastModifiedBy = inits.isInitialized("userByLastModifiedBy") ? new QUser(forProperty("userByLastModifiedBy"), inits.get("userByLastModifiedBy")) : null;
     }
 
 }

@@ -1,7 +1,7 @@
-package com.github.ttwd80.tigerpayroll.db.repsitory;
+package com.github.ttwd80.tigerpayroll.db.repository;
 
-import static com.github.ttwd80.tigerpayroll.db.repsitory.RoleRepositoryTestHelper.*;
-import static com.github.ttwd80.tigerpayroll.db.repsitory.UserRepositoryTestHelper.*;
+import static com.github.ttwd80.tigerpayroll.db.repository.RoleRepositoryTestHelper.*;
+import static com.github.ttwd80.tigerpayroll.db.repository.UserRepositoryTestHelper.*;
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -10,9 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.ttwd80.tigerpayroll.model.entity.Gender;
 import com.github.ttwd80.tigerpayroll.model.entity.Role;
 import com.github.ttwd80.tigerpayroll.model.entity.User;
 import com.github.ttwd80.tigerpayroll.model.entity.UserRole;
+import com.github.ttwd80.tigerpayroll.model.repository.GenderRepository;
 import com.github.ttwd80.tigerpayroll.model.repository.RoleRepository;
 import com.github.ttwd80.tigerpayroll.model.repository.UserRepository;
 import com.github.ttwd80.tigerpayroll.model.repository.UserRoleRepository;
@@ -28,6 +30,9 @@ public class UserRoleRepositoryIT extends BaseRepositoryIT {
 	@Autowired
 	UserRoleRepository userRoleRepository;
 
+	@Autowired
+	GenderRepository genderRepository;
+
 	@Override
 	@Before
 	public void setUp() {
@@ -35,6 +40,9 @@ public class UserRoleRepositoryIT extends BaseRepositoryIT {
 		userRoleRepository.deleteAll();
 		roleRepository.deleteAll();
 		userRepository.deleteAll();
+		genderRepository.deleteAll();
+
+		genderRepository.save(new Gender('M', "Male"));
 
 		final User user1 = createUser("user1");
 		final User user2 = createUser("user2");

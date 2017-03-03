@@ -50,7 +50,7 @@ public class DatabaseSchemaIT extends AbstractJUnit4SpringContextTests {
 		final ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(jdbcScript);
 		resourceDatabasePopulator.setContinueOnError(false);
 		resourceDatabasePopulator.execute(dataSource);
-		assertEquals(9, countTotalTables());
+		assertEquals(11, countTotalTables());
 
 	}
 

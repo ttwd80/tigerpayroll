@@ -1,4 +1,4 @@
-package com.github.ttwd80.tigerpayroll.db.repsitory;
+package com.github.ttwd80.tigerpayroll.db.repository;
 
 import static org.junit.Assert.*;
 

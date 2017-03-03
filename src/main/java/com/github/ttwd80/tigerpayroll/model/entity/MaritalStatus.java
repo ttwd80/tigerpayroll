@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class MaritalStatus  implements java.io.Serializable {
 
 
-     private char id;
+     private Character id;
      private String name;
      private String createdBy;
      private String lastModifiedBy;
@@ -33,11 +33,11 @@ public class MaritalStatus  implements java.io.Serializable {
     }
 
 	
-    public MaritalStatus(char id, String name) {
+    public MaritalStatus(Character id, String name) {
         this.id = id;
         this.name = name;
     }
-    public MaritalStatus(char id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
+    public MaritalStatus(Character id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
        this.id = id;
        this.name = name;
        this.createdBy = createdBy;
@@ -51,11 +51,11 @@ public class MaritalStatus  implements java.io.Serializable {
 
     
     @Column(name="id", unique=true, nullable=false, length=1)
-    public char getId() {
+    public Character getId() {
         return this.id;
     }
     
-    public void setId(char id) {
+    public void setId(Character id) {
         this.id = id;
     }
 
