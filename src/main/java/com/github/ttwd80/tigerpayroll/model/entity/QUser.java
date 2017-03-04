@@ -38,6 +38,16 @@ public class QUser extends EntityPathBase<User> {
 
     public final SetPath<Child, QChild> childs = this.<Child, QChild>createSet("childs", Child.class, QChild.class, PathInits.DIRECT2);
 
+    public final QChildSupportPercetage childSupportPercetageByChildSupportA;
+
+    public final QChildSupportPercetage childSupportPercetageByChildSupportB;
+
+    public final QChildSupportPercetage childSupportPercetageByChildSupportC;
+
+    public final QChildSupportPercetage childSupportPercetageByChildSupportD;
+
+    public final QChildSupportPercetage childSupportPercetageByChildSupportE;
+
     public final StringPath createdBy = createString("createdBy");
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
@@ -146,6 +156,11 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.childSupportPercetageByChildSupportA = inits.isInitialized("childSupportPercetageByChildSupportA") ? new QChildSupportPercetage(forProperty("childSupportPercetageByChildSupportA")) : null;
+        this.childSupportPercetageByChildSupportB = inits.isInitialized("childSupportPercetageByChildSupportB") ? new QChildSupportPercetage(forProperty("childSupportPercetageByChildSupportB")) : null;
+        this.childSupportPercetageByChildSupportC = inits.isInitialized("childSupportPercetageByChildSupportC") ? new QChildSupportPercetage(forProperty("childSupportPercetageByChildSupportC")) : null;
+        this.childSupportPercetageByChildSupportD = inits.isInitialized("childSupportPercetageByChildSupportD") ? new QChildSupportPercetage(forProperty("childSupportPercetageByChildSupportD")) : null;
+        this.childSupportPercetageByChildSupportE = inits.isInitialized("childSupportPercetageByChildSupportE") ? new QChildSupportPercetage(forProperty("childSupportPercetageByChildSupportE")) : null;
         this.department = inits.isInitialized("department") ? new QDepartment(forProperty("department")) : null;
         this.gender = inits.isInitialized("gender") ? new QGender(forProperty("gender")) : null;
         this.image = inits.isInitialized("image") ? new QImage(forProperty("image")) : null;

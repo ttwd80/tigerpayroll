@@ -28,6 +28,11 @@ public class User  implements java.io.Serializable {
 
 
      private String username;
+     private ChildSupportPercetage childSupportPercetageByChildSupportD;
+     private ChildSupportPercetage childSupportPercetageByChildSupportC;
+     private ChildSupportPercetage childSupportPercetageByChildSupportB;
+     private ChildSupportPercetage childSupportPercetageByChildSupportA;
+     private ChildSupportPercetage childSupportPercetageByChildSupportE;
      private Department department;
      private Gender gender;
      private Image image;
@@ -95,8 +100,13 @@ public class User  implements java.io.Serializable {
         this.bankAccountName = bankAccountName;
         this.bankAccountNumber = bankAccountNumber;
     }
-    public User(String username, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<Child> childs, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
+    public User(String username, ChildSupportPercetage childSupportPercetageByChildSupportD, ChildSupportPercetage childSupportPercetageByChildSupportC, ChildSupportPercetage childSupportPercetageByChildSupportB, ChildSupportPercetage childSupportPercetageByChildSupportA, ChildSupportPercetage childSupportPercetageByChildSupportE, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<Child> childs, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
        this.username = username;
+       this.childSupportPercetageByChildSupportD = childSupportPercetageByChildSupportD;
+       this.childSupportPercetageByChildSupportC = childSupportPercetageByChildSupportC;
+       this.childSupportPercetageByChildSupportB = childSupportPercetageByChildSupportB;
+       this.childSupportPercetageByChildSupportA = childSupportPercetageByChildSupportA;
+       this.childSupportPercetageByChildSupportE = childSupportPercetageByChildSupportE;
        this.department = department;
        this.gender = gender;
        this.image = image;
@@ -161,6 +171,56 @@ public class User  implements java.io.Serializable {
     
     public void setUsername(String username) {
         this.username = username;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="child_support_d")
+    public ChildSupportPercetage getChildSupportPercetageByChildSupportD() {
+        return this.childSupportPercetageByChildSupportD;
+    }
+    
+    public void setChildSupportPercetageByChildSupportD(ChildSupportPercetage childSupportPercetageByChildSupportD) {
+        this.childSupportPercetageByChildSupportD = childSupportPercetageByChildSupportD;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="child_support_c")
+    public ChildSupportPercetage getChildSupportPercetageByChildSupportC() {
+        return this.childSupportPercetageByChildSupportC;
+    }
+    
+    public void setChildSupportPercetageByChildSupportC(ChildSupportPercetage childSupportPercetageByChildSupportC) {
+        this.childSupportPercetageByChildSupportC = childSupportPercetageByChildSupportC;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="child_support_b")
+    public ChildSupportPercetage getChildSupportPercetageByChildSupportB() {
+        return this.childSupportPercetageByChildSupportB;
+    }
+    
+    public void setChildSupportPercetageByChildSupportB(ChildSupportPercetage childSupportPercetageByChildSupportB) {
+        this.childSupportPercetageByChildSupportB = childSupportPercetageByChildSupportB;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="child_support_a")
+    public ChildSupportPercetage getChildSupportPercetageByChildSupportA() {
+        return this.childSupportPercetageByChildSupportA;
+    }
+    
+    public void setChildSupportPercetageByChildSupportA(ChildSupportPercetage childSupportPercetageByChildSupportA) {
+        this.childSupportPercetageByChildSupportA = childSupportPercetageByChildSupportA;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="child_support_e")
+    public ChildSupportPercetage getChildSupportPercetageByChildSupportE() {
+        return this.childSupportPercetageByChildSupportE;
+    }
+    
+    public void setChildSupportPercetageByChildSupportE(ChildSupportPercetage childSupportPercetageByChildSupportE) {
+        this.childSupportPercetageByChildSupportE = childSupportPercetageByChildSupportE;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
