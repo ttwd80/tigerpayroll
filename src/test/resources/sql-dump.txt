@@ -1,72 +1,74 @@
+===
+ONE TIME INIT PASSWORD
+===
 echo "localhost:5432:*:postgres:postgres" >  ~/.pgpass
 echo "localhost:5432:*:tigerhrdev:tigerhrdev" >>  ~/.pgpass
 
+===
+START DOCKER
+===
 docker pull postgres
 docker run -p 127.0.0.1:5432:5432 --name tigerpayroll -e POSTGRES_PASSWORD=postgres -d postgres
 docker ps
 
+===
+CREATE USER PER DOCKER START
+===
 psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
 
-psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;" | grep -v "^NOTICE:"
+===
+CREATE AND RE-CREATE DATABASE UPON SCHEMA CHANGE
+===
+psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;" 2>&1 | grep -v "^NOTICE:"
 psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdev;"
 psql -q -h localhost -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
 psql -q -h localhost -U tigerhrdev tigerhrdev < db-schema.txt 2>&1 | grep -v "^NOTICE:"
 
-
-
-psql -h localhost -U tigerhrdev tigerhrdev < db-data-selenium.txt
-psql -h localhost -U tigerhrdev tigerhrdev
 ===
-pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  db-schema.txt
+POPULATE DATABASE
+===
+psql -h localhost -U tigerhrdev tigerhrdev < db-data-selenium.txt
+
+===
+DUMP DDL
+===
+pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists \
+	--schema=public --no-owner --quote-all-identifiers --no-acl \
+	--no-tablespaces tigerhrdev  | grep -Ev "^$|^SET " | grep -v --  "^--" >  db-schema.txt
+
+===
+DUMP DML
+===
 pg_dump -U tigerhrdev -h localhost -w --data-only --column-inserts --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev | grep -Ev "^--|^$|SET " > db-data-selenium.txt 
+
+===
+PSQL SESSION
+===
 psql -h localhost -U tigerhrdev tigerhrdev
 
+===
+STOP DOCKER
+===
 docker ps
 docker stop tigerpayroll
 docker rm tigerpayroll
 docker ps
 
-
-psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdb;" | grep -v "^NOTICE:"
+===
+CREATE SCHEMA FOR INTEGRATION TESTING
+===
+psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdb;" 2>&1 | grep -v "^NOTICE:"
 psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdb;"
 psql -q -h localhost -U postgres tigerhrdb -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
-psql -q -h localhost -U tigerhrdev tigerhrdb < db-schema.txt 2>&1 | grep -v "^NOTICE:"
-psql -h localhost -U tigerhrdev tigerhrdb < db-data-selenium.txt
  
-sudo apt-get install postgresql-contrib libpq-dev 
-echo '*:*:tigerhrdev:tigerhrdev:tigerhrdev' > ~/.pgpass
-chmod 0600 ~/.pgpass
-
-
-create extension pgcrypto;
-
-select length(crypt('admin123', gen_salt('bf', 10)));
-
-select crypt('tigerhrdev2017', gen_salt('bf', 10));
+===
+PASSWORD FOR ADMIN
+===
 select crypt('admin', gen_salt('bf', 10));
 $2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq
 
+===
+PASSWORD FOR USER
+===
 select crypt('user', gen_salt('bf', 10));
 $2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta
-
-
-pg_dump -U tigerhrdev -h 127.0.0.1 -w --schema-only --clean --if-exists --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev  | grep -Ev "^$|^SET "  | grep -v --  "^--" >  tigerhrdev.sql
-
-psql -h 127.0.0.1 -U tigerhrdev tigerhrdev < tigerhrdev.sql
-
-init
-insert into 
-
-ssh -L 8081:localhost:8081 -L 5432:localhost:5432 ubuntu@192.168.100.101
-
-
-select crypt('tigerhrdev2017', gen_salt('bf', 10));
-
-insert into "user" values ('admin','$2a$10$GrRynyY4D9RCEd9QRaHk7eMJiDbejXLSQqSNdWD7869IIajr5qXJq', false, null, 'admin', null, now(), null);
-insert into "role" values ('ROLE_ADMIN', 'admin', null, now(), null);
-insert into "user_role" values (DEFAULT, 'admin', 'ROLE_ADMIN', 'admin', null, now(), null);
-insert into "user" values ('user','$2a$10$180H2fPp5SmqwDcQ6bienOVKvNudS6JWIvG8ERaOStpez7dUfO.ta', false, null, 'admin', null, now(), null);
-insert into "role" values ('ROLE_USER', 'admin', null, now(), null);
-insert into "user_role" values (DEFAULT, 'user', 'ROLE_USER', 'admin', null, now(), null);
-
-SELECT table_name  FROM information_schema.tables where table_schema = 'public';
