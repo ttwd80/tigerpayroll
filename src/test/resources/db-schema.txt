@@ -7,6 +7,11 @@ ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_marit
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_image_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_gender_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_department_id_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_child_support_e_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_child_support_d_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_child_support_c_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_child_support_b_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."user" DROP CONSTRAINT IF EXISTS "user_child_support_a_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_username_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_created_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."user_allowance" DROP CONSTRAINT IF EXISTS "user_allowance_allowance_id_fkey";
@@ -37,6 +42,7 @@ ALTER TABLE IF EXISTS ONLY "public"."marital_status" DROP CONSTRAINT IF EXISTS "
 ALTER TABLE IF EXISTS ONLY "public"."image" DROP CONSTRAINT IF EXISTS "image_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."gender" DROP CONSTRAINT IF EXISTS "gender_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."department" DROP CONSTRAINT IF EXISTS "department_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."child_support_percetage" DROP CONSTRAINT IF EXISTS "child_support_percetage_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_pkey";
 ALTER TABLE IF EXISTS "public"."user_role" ALTER COLUMN "id" DROP DEFAULT;
@@ -56,6 +62,7 @@ DROP SEQUENCE IF EXISTS "public"."image_id_seq";
 DROP TABLE IF EXISTS "public"."image";
 DROP TABLE IF EXISTS "public"."gender";
 DROP TABLE IF EXISTS "public"."department";
+DROP TABLE IF EXISTS "public"."child_support_percetage";
 DROP SEQUENCE IF EXISTS "public"."child_id_seq";
 DROP TABLE IF EXISTS "public"."child";
 DROP TABLE IF EXISTS "public"."allowance";
@@ -90,6 +97,14 @@ CREATE SEQUENCE "child_id_seq"
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE "child_id_seq" OWNED BY "child"."id";
+CREATE TABLE "child_support_percetage" (
+    "id" integer NOT NULL,
+    "amount" numeric(5,2) NOT NULL,
+    "created_by" character varying(20),
+    "last_modified_by" character varying(20),
+    "created_date" timestamp with time zone,
+    "last_modified_date" timestamp with time zone
+);
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
@@ -189,6 +204,11 @@ CREATE TABLE "user" (
     "spouse_working" boolean,
     "spouse_income_tax_no" character varying(20),
     "spouse_address" "date",
+    "child_support_a" integer,
+    "child_support_b" integer,
+    "child_support_c" integer,
+    "child_support_d" integer,
+    "child_support_e" integer,
     "image_id" integer,
     "created_by" character varying(20),
     "last_modified_by" character varying(20),
@@ -233,6 +253,8 @@ ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "child"
     ADD CONSTRAINT "child_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "child_support_percetage"
+    ADD CONSTRAINT "child_support_percetage_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "department"
     ADD CONSTRAINT "department_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "gender"
@@ -284,6 +306,16 @@ ALTER TABLE ONLY "user_allowance"
     ADD CONSTRAINT "user_allowance_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user_allowance"
     ADD CONSTRAINT "user_allowance_username_fkey" FOREIGN KEY ("username") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_child_support_a_fkey" FOREIGN KEY ("child_support_a") REFERENCES "child_support_percetage"("id");
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_child_support_b_fkey" FOREIGN KEY ("child_support_b") REFERENCES "child_support_percetage"("id");
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_child_support_c_fkey" FOREIGN KEY ("child_support_c") REFERENCES "child_support_percetage"("id");
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_child_support_d_fkey" FOREIGN KEY ("child_support_d") REFERENCES "child_support_percetage"("id");
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_child_support_e_fkey" FOREIGN KEY ("child_support_e") REFERENCES "child_support_percetage"("id");
 ALTER TABLE ONLY "user"
     ADD CONSTRAINT "user_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "user"
