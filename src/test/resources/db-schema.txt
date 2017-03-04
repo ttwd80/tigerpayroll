@@ -19,8 +19,11 @@ ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_last_
 ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_created_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_username_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_gender_id_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."back_pay" DROP CONSTRAINT IF EXISTS "back_pay_username_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_created_by_fkey";
+DROP INDEX IF EXISTS "public"."idx_back_pay_username_date";
+DROP INDEX IF EXISTS "public"."idx_back_pay_date";
 DROP INDEX IF EXISTS "public"."fki_user_socso_status_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_race_id_fkey";
 DROP INDEX IF EXISTS "public"."fki_user_marital_status_id_fkey";
@@ -49,6 +52,7 @@ ALTER TABLE IF EXISTS "public"."user_role" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."user_allowance" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."image" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."child" ALTER COLUMN "id" DROP DEFAULT;
+ALTER TABLE IF EXISTS "public"."back_pay" ALTER COLUMN "id" DROP DEFAULT;
 DROP SEQUENCE IF EXISTS "public"."user_role_id_seq";
 DROP TABLE IF EXISTS "public"."user_role";
 DROP SEQUENCE IF EXISTS "public"."user_allowance_id_seq";
@@ -65,6 +69,8 @@ DROP TABLE IF EXISTS "public"."department";
 DROP TABLE IF EXISTS "public"."child_support_percetage";
 DROP SEQUENCE IF EXISTS "public"."child_id_seq";
 DROP TABLE IF EXISTS "public"."child";
+DROP SEQUENCE IF EXISTS "public"."back_pay_id_seq";
+DROP TABLE IF EXISTS "public"."back_pay";
 DROP TABLE IF EXISTS "public"."allowance";
 DROP SCHEMA IF EXISTS "public";
 CREATE SCHEMA "public";
@@ -75,10 +81,25 @@ CREATE TABLE "allowance" (
     "position" integer,
     "amount" numeric(7,2) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
+CREATE TABLE "back_pay" (
+    "id" integer NOT NULL,
+    "username" character varying(20) NOT NULL,
+    "amount" numeric(16,2) NOT NULL,
+    "date" "date" NOT NULL,
+    "created_by" character varying(20),
+    "created_date" timestamp with time zone
+);
+CREATE SEQUENCE "back_pay_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE "back_pay_id_seq" OWNED BY "back_pay"."id";
 CREATE TABLE "child" (
     "id" integer NOT NULL,
     "username" character varying(20) NOT NULL,
@@ -88,7 +109,11 @@ CREATE TABLE "child" (
     "gender_id" character(1) NOT NULL,
     "student" boolean,
     "working" boolean,
-    "handicapped" boolean
+    "handicapped" boolean,
+    "created_by" character varying(20),
+    "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
+    "last_modified_date" timestamp with time zone
 );
 CREATE SEQUENCE "child_id_seq"
     START WITH 1
@@ -101,29 +126,31 @@ CREATE TABLE "child_support_percetage" (
     "id" integer NOT NULL,
     "amount" numeric(5,2) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "gender" (
     "id" character(1) NOT NULL,
     "name" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "image" (
     "id" integer NOT NULL,
-    "image" "bytea" NOT NULL
+    "image" "bytea" NOT NULL,
+    "created_by" character varying(20),
+    "created_date" timestamp with time zone
 );
 CREATE SEQUENCE "image_id_seq"
     START WITH 1
@@ -136,23 +163,23 @@ CREATE TABLE "marital_status" (
     "id" character(1) NOT NULL,
     "name" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "race" (
     "id" character(1) NOT NULL,
     "name" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "role" (
     "id" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "socso_status" (
@@ -160,8 +187,8 @@ CREATE TABLE "socso_status" (
     "label" character varying(100) NOT NULL,
     "note" character varying(100),
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "user" (
@@ -211,8 +238,8 @@ CREATE TABLE "user" (
     "child_support_e" integer,
     "image_id" integer,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE TABLE "user_allowance" (
@@ -234,8 +261,8 @@ CREATE TABLE "user_role" (
     "username" character varying(20) NOT NULL,
     "role_id" character varying(20) NOT NULL,
     "created_by" character varying(20),
-    "last_modified_by" character varying(20),
     "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
     "last_modified_date" timestamp with time zone
 );
 CREATE SEQUENCE "user_role_id_seq"
@@ -245,6 +272,7 @@ CREATE SEQUENCE "user_role_id_seq"
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE "user_role_id_seq" OWNED BY "user_role"."id";
+ALTER TABLE ONLY "back_pay" ALTER COLUMN "id" SET DEFAULT "nextval"('"back_pay_id_seq"'::"regclass");
 ALTER TABLE ONLY "child" ALTER COLUMN "id" SET DEFAULT "nextval"('"child_id_seq"'::"regclass");
 ALTER TABLE ONLY "image" ALTER COLUMN "id" SET DEFAULT "nextval"('"image_id_seq"'::"regclass");
 ALTER TABLE ONLY "user_allowance" ALTER COLUMN "id" SET DEFAULT "nextval"('"user_allowance_id_seq"'::"regclass");
@@ -288,10 +316,14 @@ CREATE INDEX "fki_user_gender_id_fkey" ON "user" USING "btree" ("gender_id");
 CREATE INDEX "fki_user_marital_status_id_fkey" ON "user" USING "btree" ("marital_status_id");
 CREATE INDEX "fki_user_race_id_fkey" ON "user" USING "btree" ("race_id");
 CREATE INDEX "fki_user_socso_status_id_fkey" ON "user" USING "btree" ("socso_status_id");
+CREATE INDEX "idx_back_pay_date" ON "back_pay" USING "btree" ("date");
+CREATE INDEX "idx_back_pay_username_date" ON "back_pay" USING "btree" ("username", "date");
 ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "back_pay"
+    ADD CONSTRAINT "back_pay_username_fkey" FOREIGN KEY ("username") REFERENCES "user"("username");
 ALTER TABLE ONLY "child"
     ADD CONSTRAINT "child_gender_id_fkey" FOREIGN KEY ("gender_id") REFERENCES "gender"("id");
 ALTER TABLE ONLY "child"

@@ -17,7 +17,7 @@ CREATE USER PER DOCKER START
 psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
 
 ===
-CREATE AND RE-CREATE DATABASE UPON SCHEMA CHANGE
+(RE)CREATE DATABASE UPON SCHEMA CHANGE
 ===
 psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;" 2>&1 | grep -v "^NOTICE:"
 psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdev;"
@@ -27,7 +27,7 @@ psql -q -h localhost -U tigerhrdev tigerhrdev < db-schema.txt 2>&1 | grep -v "^N
 ===
 POPULATE DATABASE
 ===
-psql -h localhost -U tigerhrdev tigerhrdev < db-data-selenium.txt
+psql -h localhost -U tigerhrdev tigerhrdev < db-data-selenium.txt 2>&1 > /dev/null
 
 ===
 DUMP DDL
@@ -37,9 +37,11 @@ pg_dump -U tigerhrdev -h localhost -w --schema-only --clean --if-exists \
 	--no-tablespaces tigerhrdev  | grep -Ev "^$|^SET " | grep -v --  "^--" >  db-schema.txt
 
 ===
-DUMP DML
+DUMP DATA
 ===
-pg_dump -U tigerhrdev -h localhost -w --data-only --column-inserts --schema=public --no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev | grep -Ev "^--|^$|SET " > db-data-selenium.txt 
+pg_dump -U tigerhrdev -h localhost -w --data-only --column-inserts --schema=public \
+	--no-owner --quote-all-identifiers --no-acl --no-tablespaces tigerhrdev | \
+	grep -Ev "^--|^$|SET " > db-data-selenium.txt 
 
 ===
 PSQL SESSION
