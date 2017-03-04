@@ -78,7 +78,10 @@ CREATE TABLE "child" (
     "full_name" character varying(100) NOT NULL,
     "ic_no" character varying(20),
     "date_of_birth" "date",
-    "gender_id" character(1) NOT NULL
+    "gender_id" character(1) NOT NULL,
+    "student" boolean,
+    "working" boolean,
+    "handicapped" boolean
 );
 CREATE SEQUENCE "child_id_seq"
     START WITH 1

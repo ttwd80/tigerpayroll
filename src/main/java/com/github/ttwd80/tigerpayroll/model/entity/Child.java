@@ -28,6 +28,9 @@ public class Child  implements java.io.Serializable {
      private String fullName;
      private String icNo;
      private Date dateOfBirth;
+     private Boolean student;
+     private Boolean working;
+     private Boolean handicapped;
 
     public Child() {
     }
@@ -39,13 +42,16 @@ public class Child  implements java.io.Serializable {
         this.user = user;
         this.fullName = fullName;
     }
-    public Child(Integer id, Gender gender, User user, String fullName, String icNo, Date dateOfBirth) {
+    public Child(Integer id, Gender gender, User user, String fullName, String icNo, Date dateOfBirth, Boolean student, Boolean working, Boolean handicapped) {
        this.id = id;
        this.gender = gender;
        this.user = user;
        this.fullName = fullName;
        this.icNo = icNo;
        this.dateOfBirth = dateOfBirth;
+       this.student = student;
+       this.working = working;
+       this.handicapped = handicapped;
     }
    
      @Id 
@@ -108,6 +114,36 @@ public class Child  implements java.io.Serializable {
     
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    
+    @Column(name="student")
+    public Boolean getStudent() {
+        return this.student;
+    }
+    
+    public void setStudent(Boolean student) {
+        this.student = student;
+    }
+
+    
+    @Column(name="working")
+    public Boolean getWorking() {
+        return this.working;
+    }
+    
+    public void setWorking(Boolean working) {
+        this.working = working;
+    }
+
+    
+    @Column(name="handicapped")
+    public Boolean getHandicapped() {
+        return this.handicapped;
+    }
+    
+    public void setHandicapped(Boolean handicapped) {
+        this.handicapped = handicapped;
     }
 
 

@@ -28,11 +28,17 @@ public class QChild extends EntityPathBase<Child> {
 
     public final QGender gender;
 
+    public final BooleanPath handicapped = createBoolean("handicapped");
+
     public final StringPath icNo = createString("icNo");
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final BooleanPath student = createBoolean("student");
+
     public final QUser user;
+
+    public final BooleanPath working = createBoolean("working");
 
     public QChild(String variable) {
         this(Child.class, forVariable(variable), INITS);
