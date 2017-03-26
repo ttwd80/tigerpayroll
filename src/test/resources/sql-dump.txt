@@ -2,7 +2,8 @@
 ONE TIME INIT PASSWORD
 ===
 echo "localhost:5432:*:postgres:postgres" >  ~/.pgpass
-echo "localhost:5432:*:tigerhrdev:tigerhrdev" >>  ~/.pgpass
+echo "localhost:5432:*:tigerhrdev:tigerhrdev" >> ~/.pgpass
+chmod 0600 ~/.pgpass
 
 ===
 START DOCKER
@@ -14,13 +15,14 @@ docker ps
 ===
 CREATE USER PER DOCKER START
 ===
-psql -h localhost  -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
+psql -h localhost -U postgres -c "CREATE USER tigerhrdev WITH PASSWORD 'tigerhrdev' CREATEDB;"
+psql -h localhost -U postgres -c "ALTER USER postgres PASSWORD 'postgres';"
 
 ===
 (RE)CREATE DATABASE UPON SCHEMA CHANGE
 ===
-psql -q -h localhost -U postgres -c "DROP DATABASE IF EXISTS tigerhrdev;" 2>&1 | grep -v "^NOTICE:"
-psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdev;"
+psql -q -h localhost -U tigerhrdev postgres -c "DROP DATABASE IF EXISTS tigerhrdev;" 2>&1 | grep -v "^NOTICE:"
+psql -q -h localhost -U tigerhrdev postgres -c "CREATE DATABASE tigerhrdev OWNER tigerhrdev;"
 psql -q -h localhost -U postgres tigerhrdev -c "ALTER SCHEMA public OWNER TO tigerhrdev;"
 psql -q -h localhost -U tigerhrdev tigerhrdev < db-schema.txt 2>&1 | grep -v "^NOTICE:"
 
