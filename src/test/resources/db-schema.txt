@@ -20,6 +20,7 @@ ALTER TABLE IF EXISTS ONLY "public"."role" DROP CONSTRAINT IF EXISTS "role_creat
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_username_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_gender_id_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."back_pay" DROP CONSTRAINT IF EXISTS "back_pay_username_fkey";
+ALTER TABLE IF EXISTS ONLY "public"."back_pay" DROP CONSTRAINT IF EXISTS "back_pay_back_pay_type_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_last_modified_by_fkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_created_by_fkey";
 DROP INDEX IF EXISTS "public"."idx_back_pay_username_date";
@@ -47,6 +48,8 @@ ALTER TABLE IF EXISTS ONLY "public"."gender" DROP CONSTRAINT IF EXISTS "gender_p
 ALTER TABLE IF EXISTS ONLY "public"."department" DROP CONSTRAINT IF EXISTS "department_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."child_support_percetage" DROP CONSTRAINT IF EXISTS "child_support_percetage_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."child" DROP CONSTRAINT IF EXISTS "child_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."back_pay_type" DROP CONSTRAINT IF EXISTS "back_pay_type_pkey";
+ALTER TABLE IF EXISTS ONLY "public"."back_pay" DROP CONSTRAINT IF EXISTS "back_pay_pkey";
 ALTER TABLE IF EXISTS ONLY "public"."allowance" DROP CONSTRAINT IF EXISTS "allowance_pkey";
 ALTER TABLE IF EXISTS "public"."user_role" ALTER COLUMN "id" DROP DEFAULT;
 ALTER TABLE IF EXISTS "public"."user_allowance" ALTER COLUMN "id" DROP DEFAULT;
@@ -69,6 +72,7 @@ DROP TABLE IF EXISTS "public"."department";
 DROP TABLE IF EXISTS "public"."child_support_percetage";
 DROP SEQUENCE IF EXISTS "public"."child_id_seq";
 DROP TABLE IF EXISTS "public"."child";
+DROP TABLE IF EXISTS "public"."back_pay_type";
 DROP SEQUENCE IF EXISTS "public"."back_pay_id_seq";
 DROP TABLE IF EXISTS "public"."back_pay";
 DROP TABLE IF EXISTS "public"."allowance";
@@ -88,6 +92,7 @@ CREATE TABLE "allowance" (
 CREATE TABLE "back_pay" (
     "id" integer NOT NULL,
     "username" character varying(20) NOT NULL,
+    "back_pay_type" character(1),
     "amount" numeric(16,2) NOT NULL,
     "date" "date" NOT NULL,
     "created_by" character varying(20),
@@ -100,6 +105,14 @@ CREATE SEQUENCE "back_pay_id_seq"
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE "back_pay_id_seq" OWNED BY "back_pay"."id";
+CREATE TABLE "back_pay_type" (
+    "back_pay_type" character(1) NOT NULL,
+    "name" character varying(20) NOT NULL,
+    "created_by" character varying(20),
+    "created_date" timestamp with time zone,
+    "last_modified_by" character varying(20),
+    "last_modified_date" timestamp with time zone
+);
 CREATE TABLE "child" (
     "id" integer NOT NULL,
     "username" character varying(20) NOT NULL,
@@ -133,6 +146,7 @@ CREATE TABLE "child_support_percetage" (
 CREATE TABLE "department" (
     "id" character(10) NOT NULL,
     "name" character varying(20) NOT NULL,
+    "position" integer,
     "created_by" character varying(20),
     "created_date" timestamp with time zone,
     "last_modified_by" character varying(20),
@@ -279,6 +293,10 @@ ALTER TABLE ONLY "user_allowance" ALTER COLUMN "id" SET DEFAULT "nextval"('"user
 ALTER TABLE ONLY "user_role" ALTER COLUMN "id" SET DEFAULT "nextval"('"user_role_id_seq"'::"regclass");
 ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "back_pay"
+    ADD CONSTRAINT "back_pay_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "back_pay_type"
+    ADD CONSTRAINT "back_pay_type_pkey" PRIMARY KEY ("back_pay_type");
 ALTER TABLE ONLY "child"
     ADD CONSTRAINT "child_pkey" PRIMARY KEY ("id");
 ALTER TABLE ONLY "child_support_percetage"
@@ -322,6 +340,8 @@ ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY "allowance"
     ADD CONSTRAINT "allowance_last_modified_by_fkey" FOREIGN KEY ("last_modified_by") REFERENCES "user"("username") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY "back_pay"
+    ADD CONSTRAINT "back_pay_back_pay_type_fkey" FOREIGN KEY ("back_pay_type") REFERENCES "back_pay_type"("back_pay_type");
 ALTER TABLE ONLY "back_pay"
     ADD CONSTRAINT "back_pay_username_fkey" FOREIGN KEY ("username") REFERENCES "user"("username");
 ALTER TABLE ONLY "child"
