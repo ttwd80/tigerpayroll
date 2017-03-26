@@ -1,0 +1,62 @@
+package com.github.ttwd80.tigerpayroll.model.entity;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QBackPay is a Querydsl query type for BackPay
+ */
+@Generated("com.mysema.query.codegen.EntitySerializer")
+public class QBackPay extends EntityPathBase<BackPay> {
+
+    private static final long serialVersionUID = -1304336776L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
+
+    public static final QBackPay backPay = new QBackPay("backPay");
+
+    public final NumberPath<java.math.BigDecimal> amount = createNumber("amount", java.math.BigDecimal.class);
+
+    public final QBackPayType backPayType;
+
+    public final StringPath createdBy = createString("createdBy");
+
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
+
+    public final DatePath<java.util.Date> date = createDate("date", java.util.Date.class);
+
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final QUser user;
+
+    public QBackPay(String variable) {
+        this(BackPay.class, forVariable(variable), INITS);
+    }
+
+    public QBackPay(Path<? extends BackPay> path) {
+        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+    }
+
+    public QBackPay(PathMetadata<?> metadata) {
+        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
+    }
+
+    public QBackPay(PathMetadata<?> metadata, PathInits inits) {
+        this(BackPay.class, metadata, inits);
+    }
+
+    public QBackPay(Class<? extends BackPay> type, PathMetadata<?> metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.backPayType = inits.isInitialized("backPayType") ? new QBackPayType(forProperty("backPayType")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
+    }
+
+}
+

@@ -1,6 +1,7 @@
 package com.github.ttwd80.tigerpayroll.model.entity;
 
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,10 @@ public class Child  implements java.io.Serializable {
      private Boolean student;
      private Boolean working;
      private Boolean handicapped;
+     private String createdBy;
+     private ZonedDateTime createdDate;
+     private String lastModifiedBy;
+     private ZonedDateTime lastModifiedDate;
 
     public Child() {
     }
@@ -42,7 +47,7 @@ public class Child  implements java.io.Serializable {
         this.user = user;
         this.fullName = fullName;
     }
-    public Child(Integer id, Gender gender, User user, String fullName, String icNo, Date dateOfBirth, Boolean student, Boolean working, Boolean handicapped) {
+    public Child(Integer id, Gender gender, User user, String fullName, String icNo, Date dateOfBirth, Boolean student, Boolean working, Boolean handicapped, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate) {
        this.id = id;
        this.gender = gender;
        this.user = user;
@@ -52,6 +57,10 @@ public class Child  implements java.io.Serializable {
        this.student = student;
        this.working = working;
        this.handicapped = handicapped;
+       this.createdBy = createdBy;
+       this.createdDate = createdDate;
+       this.lastModifiedBy = lastModifiedBy;
+       this.lastModifiedDate = lastModifiedDate;
     }
    
      @Id 
@@ -144,6 +153,48 @@ public class Child  implements java.io.Serializable {
     
     public void setHandicapped(Boolean handicapped) {
         this.handicapped = handicapped;
+    }
+
+    
+    @Column(name="created_by", length=20)
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    
+    @Column(name="created_date", length=35)
+    @org.springframework.data.annotation.CreatedDate
+    public ZonedDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+    
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    
+    @Column(name="last_modified_date", length=35)
+    @org.springframework.data.annotation.LastModifiedDate
+    public ZonedDateTime getLastModifiedDate() {
+        return this.lastModifiedDate;
+    }
+    
+    public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 

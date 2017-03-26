@@ -73,9 +73,10 @@ public class User  implements java.io.Serializable {
      private String spouseIncomeTaxNo;
      private Date spouseAddress;
      private String createdBy;
-     private String lastModifiedBy;
      private ZonedDateTime createdDate;
+     private String lastModifiedBy;
      private ZonedDateTime lastModifiedDate;
+     private Set<BackPay> backPays = new HashSet<BackPay>(0);
      private Set<Role> rolesForLastModifiedBy = new HashSet<Role>(0);
      private Set<UserRole> userRolesForLastModifiedBy = new HashSet<UserRole>(0);
      private Set<UserRole> userRolesForUsername = new HashSet<UserRole>(0);
@@ -100,7 +101,7 @@ public class User  implements java.io.Serializable {
         this.bankAccountName = bankAccountName;
         this.bankAccountNumber = bankAccountNumber;
     }
-    public User(String username, ChildSupportPercetage childSupportPercetageByChildSupportD, ChildSupportPercetage childSupportPercetageByChildSupportC, ChildSupportPercetage childSupportPercetageByChildSupportB, ChildSupportPercetage childSupportPercetageByChildSupportA, ChildSupportPercetage childSupportPercetageByChildSupportE, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<Child> childs, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
+    public User(String username, ChildSupportPercetage childSupportPercetageByChildSupportD, ChildSupportPercetage childSupportPercetageByChildSupportC, ChildSupportPercetage childSupportPercetageByChildSupportB, ChildSupportPercetage childSupportPercetageByChildSupportA, ChildSupportPercetage childSupportPercetageByChildSupportE, Department department, Gender gender, Image image, MaritalStatus maritalStatus, Race race, SocsoStatus socsoStatus, String fullName, String password, boolean locked, String address, String phoneHandphone, String phoneOffice, Date dateOfBirth, Date dateJoined, String jobTitle, String qualificationAcademic, String qualificationProfessional, String socsoNo, String epfNo, String incomeTaxNo, BigDecimal basicSalary, String bankAccountName, String bankAccountNumber, String bankBranchName, String oldIc, String newIc, String icColour, String passportNo, String workPermitNo, String nameAddressPreviousEmployer, String spouseName, String spouseSpouseOldIc, String spouseSpouseNewIc, String spouseDateOfBirth, String spousePhoneHandphone, String spousePhoneOffice, Boolean spouseWorking, String spouseIncomeTaxNo, Date spouseAddress, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Set<BackPay> backPays, Set<Role> rolesForLastModifiedBy, Set<UserRole> userRolesForLastModifiedBy, Set<UserRole> userRolesForUsername, Set<Allowance> allowancesForLastModifiedBy, Set<UserAllowance> userAllowancesForUsername, Set<Child> childs, Set<UserAllowance> userAllowancesForCreatedBy, Set<Allowance> allowancesForCreatedBy, Set<Role> rolesForCreatedBy) {
        this.username = username;
        this.childSupportPercetageByChildSupportD = childSupportPercetageByChildSupportD;
        this.childSupportPercetageByChildSupportC = childSupportPercetageByChildSupportC;
@@ -147,9 +148,10 @@ public class User  implements java.io.Serializable {
        this.spouseIncomeTaxNo = spouseIncomeTaxNo;
        this.spouseAddress = spouseAddress;
        this.createdBy = createdBy;
-       this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
+       this.lastModifiedBy = lastModifiedBy;
        this.lastModifiedDate = lastModifiedDate;
+       this.backPays = backPays;
        this.rolesForLastModifiedBy = rolesForLastModifiedBy;
        this.userRolesForLastModifiedBy = userRolesForLastModifiedBy;
        this.userRolesForUsername = userRolesForUsername;
@@ -624,16 +626,6 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="last_modified_by", length=20)
-    public String getLastModifiedBy() {
-        return this.lastModifiedBy;
-    }
-    
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    
     @Column(name="created_date", length=35)
     @org.springframework.data.annotation.CreatedDate
     public ZonedDateTime getCreatedDate() {
@@ -645,6 +637,16 @@ public class User  implements java.io.Serializable {
     }
 
     
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    
     @Column(name="last_modified_date", length=35)
     @org.springframework.data.annotation.LastModifiedDate
     public ZonedDateTime getLastModifiedDate() {
@@ -653,6 +655,15 @@ public class User  implements java.io.Serializable {
     
     public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+    public Set<BackPay> getBackPays() {
+        return this.backPays;
+    }
+    
+    public void setBackPays(Set<BackPay> backPays) {
+        this.backPays = backPays;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByLastModifiedBy")

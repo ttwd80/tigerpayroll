@@ -11,20 +11,22 @@ import com.mysema.query.types.path.PathInits;
 
 
 /**
- * QDepartment is a Querydsl query type for Department
+ * QBackPayType is a Querydsl query type for BackPayType
  */
 @Generated("com.mysema.query.codegen.EntitySerializer")
-public class QDepartment extends EntityPathBase<Department> {
+public class QBackPayType extends EntityPathBase<BackPayType> {
 
-    private static final long serialVersionUID = 1926599611L;
+    private static final long serialVersionUID = 1306619346L;
 
-    public static final QDepartment department = new QDepartment("department");
+    public static final QBackPayType backPayType1 = new QBackPayType("backPayType1");
+
+    public final SetPath<BackPay, QBackPay> backPays = this.<BackPay, QBackPay>createSet("backPays", BackPay.class, QBackPay.class, PathInits.DIRECT2);
+
+    public final ComparablePath<Character> backPayType = createComparable("backPayType", Character.class);
 
     public final StringPath createdBy = createString("createdBy");
 
     public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
-
-    public final StringPath id = createString("id");
 
     public final StringPath lastModifiedBy = createString("lastModifiedBy");
 
@@ -32,20 +34,16 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public final StringPath name = createString("name");
 
-    public final NumberPath<Integer> position = createNumber("position", Integer.class);
-
-    public final SetPath<User, QUser> users = this.<User, QUser>createSet("users", User.class, QUser.class, PathInits.DIRECT2);
-
-    public QDepartment(String variable) {
-        super(Department.class, forVariable(variable));
+    public QBackPayType(String variable) {
+        super(BackPayType.class, forVariable(variable));
     }
 
-    public QDepartment(Path<? extends Department> path) {
+    public QBackPayType(Path<? extends BackPayType> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QDepartment(PathMetadata<?> metadata) {
-        super(Department.class, metadata);
+    public QBackPayType(PathMetadata<?> metadata) {
+        super(BackPayType.class, metadata);
     }
 
 }

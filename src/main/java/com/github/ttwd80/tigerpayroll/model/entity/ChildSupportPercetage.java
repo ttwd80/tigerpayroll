@@ -25,8 +25,8 @@ public class ChildSupportPercetage  implements java.io.Serializable {
      private Integer id;
      private BigDecimal amount;
      private String createdBy;
-     private String lastModifiedBy;
      private ZonedDateTime createdDate;
+     private String lastModifiedBy;
      private ZonedDateTime lastModifiedDate;
      private Set<User> usersForChildSupportD = new HashSet<User>(0);
      private Set<User> usersForChildSupportC = new HashSet<User>(0);
@@ -42,12 +42,12 @@ public class ChildSupportPercetage  implements java.io.Serializable {
         this.id = id;
         this.amount = amount;
     }
-    public ChildSupportPercetage(Integer id, BigDecimal amount, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> usersForChildSupportD, Set<User> usersForChildSupportC, Set<User> usersForChildSupportB, Set<User> usersForChildSupportA, Set<User> usersForChildSupportE) {
+    public ChildSupportPercetage(Integer id, BigDecimal amount, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Set<User> usersForChildSupportD, Set<User> usersForChildSupportC, Set<User> usersForChildSupportB, Set<User> usersForChildSupportA, Set<User> usersForChildSupportE) {
        this.id = id;
        this.amount = amount;
        this.createdBy = createdBy;
-       this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
+       this.lastModifiedBy = lastModifiedBy;
        this.lastModifiedDate = lastModifiedDate;
        this.usersForChildSupportD = usersForChildSupportD;
        this.usersForChildSupportC = usersForChildSupportC;
@@ -89,16 +89,6 @@ public class ChildSupportPercetage  implements java.io.Serializable {
     }
 
     
-    @Column(name="last_modified_by", length=20)
-    public String getLastModifiedBy() {
-        return this.lastModifiedBy;
-    }
-    
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    
     @Column(name="created_date", length=35)
     @org.springframework.data.annotation.CreatedDate
     public ZonedDateTime getCreatedDate() {
@@ -107,6 +97,16 @@ public class ChildSupportPercetage  implements java.io.Serializable {
     
     public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     

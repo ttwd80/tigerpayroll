@@ -24,8 +24,8 @@ public class Race  implements java.io.Serializable {
      private Character id;
      private String name;
      private String createdBy;
-     private String lastModifiedBy;
      private ZonedDateTime createdDate;
+     private String lastModifiedBy;
      private ZonedDateTime lastModifiedDate;
      private Set<User> users = new HashSet<User>(0);
 
@@ -37,12 +37,12 @@ public class Race  implements java.io.Serializable {
         this.id = id;
         this.name = name;
     }
-    public Race(Character id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
+    public Race(Character id, String name, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Set<User> users) {
        this.id = id;
        this.name = name;
        this.createdBy = createdBy;
-       this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
+       this.lastModifiedBy = lastModifiedBy;
        this.lastModifiedDate = lastModifiedDate;
        this.users = users;
     }
@@ -80,16 +80,6 @@ public class Race  implements java.io.Serializable {
     }
 
     
-    @Column(name="last_modified_by", length=20)
-    public String getLastModifiedBy() {
-        return this.lastModifiedBy;
-    }
-    
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    
     @Column(name="created_date", length=35)
     @org.springframework.data.annotation.CreatedDate
     public ZonedDateTime getCreatedDate() {
@@ -98,6 +88,16 @@ public class Race  implements java.io.Serializable {
     
     public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     

@@ -28,6 +28,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final SetPath<Allowance, QAllowance> allowancesForLastModifiedBy = this.<Allowance, QAllowance>createSet("allowancesForLastModifiedBy", Allowance.class, QAllowance.class, PathInits.DIRECT2);
 
+    public final SetPath<BackPay, QBackPay> backPays = this.<BackPay, QBackPay>createSet("backPays", BackPay.class, QBackPay.class, PathInits.DIRECT2);
+
     public final StringPath bankAccountName = createString("bankAccountName");
 
     public final StringPath bankAccountNumber = createString("bankAccountNumber");

@@ -23,9 +23,10 @@ public class Department  implements java.io.Serializable {
 
      private String id;
      private String name;
+     private Integer position;
      private String createdBy;
-     private String lastModifiedBy;
      private ZonedDateTime createdDate;
+     private String lastModifiedBy;
      private ZonedDateTime lastModifiedDate;
      private Set<User> users = new HashSet<User>(0);
 
@@ -37,12 +38,13 @@ public class Department  implements java.io.Serializable {
         this.id = id;
         this.name = name;
     }
-    public Department(String id, String name, String createdBy, String lastModifiedBy, ZonedDateTime createdDate, ZonedDateTime lastModifiedDate, Set<User> users) {
+    public Department(String id, String name, Integer position, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Set<User> users) {
        this.id = id;
        this.name = name;
+       this.position = position;
        this.createdBy = createdBy;
-       this.lastModifiedBy = lastModifiedBy;
        this.createdDate = createdDate;
+       this.lastModifiedBy = lastModifiedBy;
        this.lastModifiedDate = lastModifiedDate;
        this.users = users;
     }
@@ -70,6 +72,16 @@ public class Department  implements java.io.Serializable {
     }
 
     
+    @Column(name="position")
+    public Integer getPosition() {
+        return this.position;
+    }
+    
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    
     @Column(name="created_by", length=20)
     public String getCreatedBy() {
         return this.createdBy;
@@ -77,16 +89,6 @@ public class Department  implements java.io.Serializable {
     
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-    }
-
-    
-    @Column(name="last_modified_by", length=20)
-    public String getLastModifiedBy() {
-        return this.lastModifiedBy;
-    }
-    
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
     }
 
     
@@ -98,6 +100,16 @@ public class Department  implements java.io.Serializable {
     
     public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    
+    @Column(name="last_modified_by", length=20)
+    public String getLastModifiedBy() {
+        return this.lastModifiedBy;
+    }
+    
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     

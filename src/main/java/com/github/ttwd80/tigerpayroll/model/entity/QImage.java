@@ -20,6 +20,10 @@ public class QImage extends EntityPathBase<Image> {
 
     public static final QImage image1 = new QImage("image1");
 
+    public final StringPath createdBy = createString("createdBy");
+
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
+
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final ArrayPath<byte[], Byte> image = createArray("image", byte[].class);

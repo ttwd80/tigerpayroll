@@ -1,6 +1,7 @@
 package com.github.ttwd80.tigerpayroll.model.entity;
 
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -25,6 +26,8 @@ public class Image  implements java.io.Serializable {
 
      private Integer id;
      private byte[] image;
+     private String createdBy;
+     private ZonedDateTime createdDate;
      private Set<User> users = new HashSet<User>(0);
 
     public Image() {
@@ -34,8 +37,10 @@ public class Image  implements java.io.Serializable {
     public Image(byte[] image) {
         this.image = image;
     }
-    public Image(byte[] image, Set<User> users) {
+    public Image(byte[] image, String createdBy, ZonedDateTime createdDate, Set<User> users) {
        this.image = image;
+       this.createdBy = createdBy;
+       this.createdDate = createdDate;
        this.users = users;
     }
    
@@ -59,6 +64,27 @@ public class Image  implements java.io.Serializable {
     
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    
+    @Column(name="created_by", length=20)
+    public String getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    
+    @Column(name="created_date", length=35)
+    @org.springframework.data.annotation.CreatedDate
+    public ZonedDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+    
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="image")

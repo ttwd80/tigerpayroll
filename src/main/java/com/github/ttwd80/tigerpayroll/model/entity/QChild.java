@@ -22,6 +22,10 @@ public class QChild extends EntityPathBase<Child> {
 
     public static final QChild child = new QChild("child");
 
+    public final StringPath createdBy = createString("createdBy");
+
+    public final DateTimePath<java.time.ZonedDateTime> createdDate = createDateTime("createdDate", java.time.ZonedDateTime.class);
+
     public final DatePath<java.util.Date> dateOfBirth = createDate("dateOfBirth", java.util.Date.class);
 
     public final StringPath fullName = createString("fullName");
@@ -33,6 +37,10 @@ public class QChild extends EntityPathBase<Child> {
     public final StringPath icNo = createString("icNo");
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
+    public final StringPath lastModifiedBy = createString("lastModifiedBy");
+
+    public final DateTimePath<java.time.ZonedDateTime> lastModifiedDate = createDateTime("lastModifiedDate", java.time.ZonedDateTime.class);
 
     public final BooleanPath student = createBoolean("student");
 
